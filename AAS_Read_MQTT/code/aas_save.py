@@ -89,9 +89,6 @@ class AAS_save(multiprocessing.Process):
         self.do_connect()
         dir = self.findCurrentStore()
         self.directory = os.path.join(dir, "AAS_data/in/")
-        client =mqtt.Client()
-        client.on_disconnect = self.on_disconnect
-        self.mqtt_connect(client, True)
         logger.info("ZMQ Connected")
         run = True
         while run:

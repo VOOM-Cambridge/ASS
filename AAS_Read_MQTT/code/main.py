@@ -13,6 +13,7 @@ import zmq
 from scanner_find import BarcodeScanner
 from aas_save import AAS_save
 from wrapper import MQTTServiceWrapper
+from processing import DataProcessing
 
 
 logger = logging.getLogger("main")
@@ -31,14 +32,20 @@ def config_valid(config):
 
 def create_building_blocks(config):
     bbs = {}
+    mqtt_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}   
 
-    scan_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
-    mqtt_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
+    scan_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4001", "bind": True}
+    webIn = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4001", "bind": False}
+    webOut = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
+
     save_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
 
     bbs["scan"] = BarcodeScanner(config, {'out': scan_in})
     bbs["mqtt"] = MQTTServiceWrapper(config, {'out': mqtt_in})
+    bbs["pro"] = DataProcessing(config, {'in': webIn, 'out': webOut})
     bbs["save"] = AAS_save(config, {'in':save_in})
+
+
     return bbs
 
 
