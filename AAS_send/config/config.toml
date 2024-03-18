@@ -1,0 +1,14 @@
+# config file for 3D printing lab
+[Factory]
+name = "Robot_Lab"
+sending_method = "MQTT"              # "Printing" or "MQTT" or "Store"
+file_directory = "./AAS_Data/order/"
+[printer_send]
+url = "mqtt.local.docker"
+port = 1883
+topic = "print/"
+
+[[mqtt_send]]
+url = "129.169.48.173"
+port = 1883
+topic = "AAS/out/"

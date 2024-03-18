@@ -1,0 +1,65 @@
+
+[influx_info]
+url = "http://129.169.48.175:8086" #"timeseries-db.docker.local:8086"
+org = "Design-studio"
+token = "design-studio-lab"
+frequency_record_seconds = 1
+
+[frepple_info]
+URL = "http://129.169.48.175:80"
+password = "admin"
+user = "admin"
+
+[Factory]
+idShort = "Design_Studio"
+name = "Design Studio" #"3D Printing"
+machine = [
+    "Laser cutter 1",
+] #["Robot_Cell_3_LRM", "Robot_Cell_3_M6", "Robot_track"]
+frequencyUpdate = 1
+fileType = "ASS" #["AAS", "csv"]
+first_check = 6500 #hours
+address = "Design Studio, Insitute for manufacturing, Cambridge, UK"
+email = "sjb351@cam.ac.uk"
+process = ["laser cutting"]
+
+
+[energy_use]
+idShort = "energy_use"
+name = "energy use"
+frequency = "per product"         # per product, per order, per second
+units = "kWh"                     #Units of the data, no impact on colelction
+method = "tracking"               # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine_list = ["Laser cutter 1"]
+
+
+[material_use]
+idShort = "material_use"
+name = "material use"
+frequency = "per product" # per product, per order, per second
+units = "kg"              #Units of the data, no impact on colelction
+method = "MES"            # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+
+[material_type]
+idShort = "material_type"
+name = "material type"
+frequency = "per order"   # per product, per order, per second
+units = "kg"              #Units of the data, no impact on colelction
+method = "MES"            # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+
+[order_time_taken]
+idShort = "order_time_taken"
+name = "order time taken"
+frequency = "per order" # per product, per order, per second
+method = "tracking" # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine = [
+    "laser cutting",
+] #["Robot_Cell_3_LRM", "Robot_Cell_3_M6", "Robot_track"]
+start_location = "Job Start"
+end_location = "Job End"
+# [assembly_method]
+# name = "assembly method"
+# frequency= "per order" # per product, per order, per second
+# units= "kg" #Units of the data, no impact on colelction
+# method= "MES" # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+# add_to_AAS = 1

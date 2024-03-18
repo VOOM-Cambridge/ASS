@@ -1,0 +1,60 @@
+# config file for 3D printing lab
+
+[influx_info]
+url = "http://129.169.48.173:8086"
+org = "Robot_Lab"
+token = "robot-lab-2023"
+frequency_record_seconds = 1
+
+[frepple_info]
+URL = "http://129.169.48.173:9000"
+password = "admin"
+user = "admin"
+
+[Factory]
+name = "3D Printing"                                                   #""
+machine = ["Printer_1", "Printer_2", "Printer_3", "Printer_4"]
+frequencyUpdate = 1
+fileType = "AAS"                                                       #["AAS", "csv"]
+first_check = 300                                                      #hours
+address = "3D Printing Lab, Insitute for manufacturing, Cambridge, UK"
+email = "sjb351@cam.ac.uk"
+process = ["3D Printing"]
+
+[energy_use]
+name = "energy use"
+frequency = "per product"                 # per product, per order, per second
+units = "kWh"                             #Units of the data, no impact on colelction
+method = "signal"                         # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine_list = ["Printer_1", "Printer_2"]
+
+[material_waste]
+name = "material waste"
+frequency = "per product" # per product, per order, per second
+units = "kg"              #Units of the data, no impact on colelction
+method = "signal"         # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+source = "sensors"        # can be MES, sensors, sensor-MES, 
+
+[material_use]
+name = "material use"
+frequency = "per product" # per product, per order, per second
+units = "kg"              #Units of the data, no impact on colelction
+method = "MES"            # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+
+[material_type]
+name = "material type"
+frequency = "per order" # per product, per order, per second
+units = "kg"            #Units of the data, no impact on colelction
+method = "MES"          # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+
+[order_time_taken]
+name = "order time taken"
+frequency = "per order"   # per product, per order, per second
+method = "tracking"       # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+
+# [assembly_method]
+# name = "assembly method"
+# frequency= "per order" # per product, per order, per second
+# units= "kg" #Units of the data, no impact on colelction
+# method= "MES" # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+# add_to_AAS = 1

@@ -1,0 +1,59 @@
+[influx_info]
+url = "timeseries-db.docker.local:8086"
+org = "VOOM_MANUAL"
+token = "l3Z9k31lKzZ-Ixupk_s3FjinRas-HHbvf7tsBTpEUCP7m5YQL0Z0jF1yjQEC_ZNYLEr6xkSZfuXMUP_spHe9cg=="
+frequency_record_seconds = 1
+
+[frepple_info]
+URL = "http://frepple-3d:80"
+password = "admin"
+user = "admin"
+
+[Factory]
+idShort = "Manual_Assembly"
+name = "Manual Assembly"                                                               #"3D Printing or Robot Lab"
+machine = [["Screwdriver"]]
+frequencyUpdate = 1
+fileType = ["AAS", "csv"]
+first_check = 300                                                                      #hours
+address = "Manual Assembly, Robot Lab back, Insitute for manufacturing, Cambridge, UK"
+email = "sjb351@cam.ac.uk"
+process = ["manual assembly"]
+
+[energy_use]
+idShort = "energy_use"
+name = "energy use"
+frequency = "per product"      # per product, per order, per second
+units = "kWh"                  #Units of the data, no impact on colelction
+method = "tracking"            # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine_list = ["Screwdriver"]
+
+
+[material_use]
+idShort = "material_use"
+name = "material use"
+frequency = "per product" # per product, per order, per second
+units = "kg"              #Units of the data, no impact on colelction
+method = "MES"            # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+
+[material_type]
+idShort = "material_type"
+name = "material type"
+frequency = "per order"   # per product, per order, per second
+units = "kg"              #Units of the data, no impact on colelction
+method = "MES"            # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+
+[order_time_taken]
+idShort = "order_time_taken"
+name = "order time taken"
+frequency = "per order"       # per product, per order, per second
+method = "tracking"           # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine = [""]
+start_location = "Location 2"
+end_location = "Location 3"
+# [assembly_method]
+# name = "assembly method"
+# frequency= "per order" # per product, per order, per second
+# units= "kg" #Units of the data, no impact on colelction
+# method= "MES" # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+# add_to_AAS = 1

@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  app:
+    build: .
+    privileged: true
+    volumes:
+      - ./config:/app/config
+      #- /etc/localtime:/etc/localtime:ro
+    devices:
+      - /dev/input:/dev/input:ro
