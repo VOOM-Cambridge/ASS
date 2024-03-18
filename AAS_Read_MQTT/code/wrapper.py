@@ -81,6 +81,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
         # client.on_message = self.on_message
         client.on_disconnect = self.on_disconnect
         client.on_message = self.on_message
+        logger.info(self.topic)
         client.subscribe(self.topic, 1)
 
         # self.client.tls_set('ca.cert.pem',tls_version=2)
