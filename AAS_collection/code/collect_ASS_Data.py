@@ -533,7 +533,7 @@ def findCurrentStore():
     path = os.getcwd()
     if not folder_exists(path, "AAS_data"):
         parent = os.path.abspath(os.path.join(path, os.pardir))
-        if not folder_exists(parent, "AAS_Data"):
+        if not folder_exists(parent, "AAS_data"):
             script_dir = os.path.abspath(os.path.join(parent, os.pardir))
         else:
             script_dir = parent

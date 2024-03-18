@@ -1,0 +1,5 @@
+[mqtt]
+url = "129.169.48.174"    #"mqtt.local.docker"
+port = 1883
+topic_in = "AAS/send/in"
+topic_out = "AAS/send/in"

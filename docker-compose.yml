@@ -1,28 +1,28 @@
 version: "2"
 
 services:
-    create_aas:
-        extends:
-            file: AAS_collection/app.yml
-            service: app
-        volumes:
-            - ./AAS_data:/app/AAS_data
-        networks:
-            internal:
-                aliases:
-                    - collection.docker.local
-        restart: unless-stopped
-    # read_mqtt:
+    # create_aas:
     #     extends:
-    #         file: AAS_Read_MQTT/app.yml
+    #         file: AAS_collection/app.yml
     #         service: app
     #     volumes:
     #         - ./AAS_data:/app/AAS_data
     #     networks:
     #         internal:
     #             aliases:
-    #                 - mqttread.docker.local
+    #                 - collection.docker.local
     #     restart: unless-stopped
+    read_mqtt:
+        extends:
+            file: AAS_Read_MQTT/app.yml
+            service: app
+        volumes:
+            - ./AAS_data:/app/AAS_data
+        networks:
+            internal:
+                aliases:
+                    - mqttread.docker.local
+        restart: unless-stopped
 networks:
     internal:
         name: 3DPrinting
