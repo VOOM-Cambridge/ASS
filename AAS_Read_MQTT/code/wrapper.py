@@ -19,6 +19,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
         self.port = int(mqtt_conf['port'])
 
         self.topic_base = mqtt_conf['base_topic_template']
+        self.topic = mqtt_conf['topic']
 
         self.initial = mqtt_conf['reconnect']['initial']
         self.backoff = mqtt_conf['reconnect']['backoff']
@@ -80,6 +81,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
         # client.on_message = self.on_message
         client.on_disconnect = self.on_disconnect
         client.on_message = self.on_message
+        client.subscribe(self.topic, 1)
 
         # self.client.tls_set('ca.cert.pem',tls_version=2)
         logger.info(f'connecting to {self.url}:{self.port}')

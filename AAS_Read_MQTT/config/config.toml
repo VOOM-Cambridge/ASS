@@ -2,10 +2,10 @@
 name = "Manual Assembly"
 
 [mqtt]
-url = "mqtt.docker.local" #129.169.48.174" "mqtt.local.docker"
+url = "mqtt.docker.local"   #129.169.48.174" "mqtt.local.docker"
 port = 1883
-topic_in = "AAS/send/in"
-topic_out = "AAS/send/in"
+topic_in = "AAS/send/in/#"
+topic_out = "AAS/send/in/#"
 
 [input.scanner]
 serial = "0581_011c"
@@ -15,7 +15,7 @@ connection_point = ["0", "1", "1.0"]
 broker = "mqtt.docker.local"
 port = 1883
 base_topic_template = ""
-topic = "AAS/send/in"
+topic = "AAS/send/in/#"
 
 reconnect.initial = 5 # seconds
 reconnect.backoff = 2 # multiplier
