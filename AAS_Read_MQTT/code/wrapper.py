@@ -45,9 +45,11 @@ class MQTTServiceWrapper(multiprocessing.Process):
             try:
                 if first_time:
                     client.connect(self.url, self.port, 60)
+                    client.subscribe(self.topic, 1)
                 else:
                     logger.error("Attempting to reconnect...")
                     client.reconnect()
+                    client.subscribe(self.topic, 1)
                 logger.info("Connected!")
                 time.sleep(self.initial)  # to give things time to settle
                 exceptions = False
@@ -82,10 +84,9 @@ class MQTTServiceWrapper(multiprocessing.Process):
         client.on_disconnect = self.on_disconnect
         client.on_message = self.on_message
         logger.info(self.topic)
-        client.subscribe(self.topic, 1)
 
         # self.client.tls_set('ca.cert.pem',tls_version=2)
         logger.info(f'connecting to {self.url}:{self.port}')
         self.mqtt_connect(client, True)
         logger.info("Looping and connected")
-        client.loop_forever()
+        client.loop_start()
