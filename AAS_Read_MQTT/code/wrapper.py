@@ -45,14 +45,14 @@ class MQTTServiceWrapper(multiprocessing.Process):
             try:
                 if first_time:
                     client.connect(self.url, self.port, 60)
-                    client.subscribe(self.topic, 1)
                 else:
                     logger.error("Attempting to reconnect...")
                     client.reconnect()
-                    client.subscribe(self.topic, 1)
+                    
                 logger.info("Connected!")
                 time.sleep(self.initial)  # to give things time to settle
                 exceptions = False
+                client.subscribe(self.topic, 1)
             except Exception:
                 logger.error(f"Unable to connect, retrying in {timeout} seconds")
                 time.sleep(timeout)
@@ -67,7 +67,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
             self.mqtt_connect(client)
 
     def on_message(self, client, userdata, msg):
-        logger.debug("mess recieved form scanner")
+        logger.debug("mess", msg)
         payload = msg.payload.decode("utf-8")
         self.dispatch(payload)
 
@@ -75,12 +75,14 @@ class MQTTServiceWrapper(multiprocessing.Process):
         logger.debug(f"ZMQ dispatch of {payload}")
         await self.zmq_out.send_json(payload)
 
+    def on_connect(self, client):
+        client.subscribe(self.topic)
+
     def run(self):
         self.do_connect()
 
         client = mqtt.Client()
-        # client.on_connect = self.on_connect
-        # client.on_message = self.on_message
+        client.on_connect = self.on_connect
         client.on_disconnect = self.on_disconnect
         client.on_message = self.on_message
         logger.info(self.topic)
