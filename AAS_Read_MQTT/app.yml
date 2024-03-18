@@ -4,8 +4,12 @@ services:
   app:
     build: .
     privileged: true
-    volumes:
-      - ./config:/app/config
-      #- /etc/localtime:/etc/localtime:ro
+    working_dir: /app
+    command: "python main.py"
     devices:
       - /dev/input:/dev/input:ro
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - /etc/localtime:/etc/localtime:ro
+      - /run/udev:/run/udev:ro
