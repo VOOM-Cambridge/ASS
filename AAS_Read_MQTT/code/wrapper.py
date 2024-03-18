@@ -67,16 +67,13 @@ class MQTTServiceWrapper(multiprocessing.Process):
             self.mqtt_connect(client)
 
     def on_message(self, client, userdata, msg):
-        logger.debug("mess", msg)
+        logger.debug("Received message: %s", msg.payload.decode("utf-8"))
         payload = msg.payload.decode("utf-8")
         self.dispatch(payload)
 
-    async def dispatch(self, payload):
+    def dispatch(self, payload):
         logger.debug(f"ZMQ dispatch of {payload}")
-        await self.zmq_out.send_json(payload)
-
-    def on_connect(self, client):
-        client.subscribe(self.topic)
+        self.zmq_out.send_json(payload)
 
     def run(self):
         self.do_connect()
