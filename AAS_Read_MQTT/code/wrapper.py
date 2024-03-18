@@ -70,6 +70,10 @@ class MQTTServiceWrapper(multiprocessing.Process):
         logger.debug("Received message: %s", msg.payload.decode("utf-8"))
         payload = msg.payload.decode("utf-8")
         self.dispatch(payload)
+    
+    def on_connect(self, client):
+        client.subscribe(self.topic, 1)
+        logger.debug("Subscribe")
 
     def dispatch(self, payload):
         logger.debug(f"ZMQ dispatch of {payload}")
@@ -79,7 +83,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
         self.do_connect()
 
         client = mqtt.Client()
-        client.on_connect = self.on_connect
+        client.on_connect = self.on_connect(client)
         client.on_disconnect = self.on_disconnect
         client.on_message = self.on_message
         logger.info(self.topic)
