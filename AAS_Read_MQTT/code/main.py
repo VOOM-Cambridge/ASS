@@ -31,20 +31,21 @@ def config_valid(config):
 
 
 def create_building_blocks(config):
-    bbs = {}
-    mqtt_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}   
+    bbs = {}  
 
     scan_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4001", "bind": True}
     webIn = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4001", "bind": False}
     webOut = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
+    save_in1 = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
 
-    save_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
+    mqtt_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4002", "bind": True} 
+    save_in2 = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4002", "bind": False}
 
     bbs["scan"] = BarcodeScanner(config, {'out': scan_in})
     bbs["mqtt"] = MQTTServiceWrapper(config, {'out': mqtt_in})
     bbs["pro"] = DataProcessing(config, {'in': webIn, 'out': webOut})
-    bbs["save"] = AAS_save(config, {'in':save_in})
-
+    bbs["save1"] = AAS_save(config, {'in':save_in1})
+    bbs["save1"] = AAS_save(config, {'in':save_in2})
 
     return bbs
 
