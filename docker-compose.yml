@@ -25,5 +25,5 @@ services:
         restart: unless-stopped
 networks:
     internal:
-        name: 3DPrinting
-        #external: true
+        name: ManualLab
+        external: true

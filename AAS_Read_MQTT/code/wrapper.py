@@ -28,6 +28,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
         # declarations
         self.zmq_conf = zmq_conf
         self.zmq_out = None
+        self.zmq_in = None
 
     def do_connect(self):
         self.zmq_out = context.socket(self.zmq_conf["out"]['type'])
@@ -83,17 +84,5 @@ class MQTTServiceWrapper(multiprocessing.Process):
         # self.client.tls_set('ca.cert.pem',tls_version=2)
         logger.info(f'connecting to {self.url}:{self.port}')
         self.mqtt_connect(client, True)
-
-        run = True
-        while run:
-            while self.zmq_in.poll(50, zmq.POLLIN):
-                try:
-                    msg = self.zmq_in.recv(zmq.NOBLOCK)
-                    msg_json = json.loads(msg)
-                    topic = msg_json['topic']
-                    msg_payload = msg_json['payload']
-                    logger.debug(f'pub topic:{topic} msg:{msg_payload}')
-                    client.publish(topic, json.dumps(msg_payload))
-                except zmq.ZMQError:
-                    pass
-            client.loop(0.05)
+        logger.info("Looping and connected")
+        client.loop_forever()
