@@ -37,6 +37,7 @@ def create_building_blocks(config):
     mqtt_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
 
     bbs["check"] = Check_for_new(config, check_Out)
+
     if config["sending_method"] == "Printing":
         bbs["out"] = MQTT_Print(config, print_in)
     elif config["sending_method"] == "MQTT":

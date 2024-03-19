@@ -12,7 +12,6 @@ from datetime import datetime
 context = zmq.Context()
 logger = logging.getLogger("main.message_rewriter")
 
-
 class MQTT_forwarding(multiprocessing.Process):
     def __init__(self, config, zmq_conf):
         super().__init__()

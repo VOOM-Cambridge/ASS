@@ -7,6 +7,7 @@ services:
     #         service: app
     #     volumes:
     #         - ./AAS_data:/app/AAS_data
+            # - ./config:/app/config
     #     networks:
     #         internal:
     #             aliases:
@@ -18,6 +19,7 @@ services:
             service: app
         volumes:
             - ./AAS_data:/app/AAS_data
+            - ./config:/app/config
         networks:
             internal:
                 aliases:
@@ -25,5 +27,5 @@ services:
         restart: unless-stopped
 networks:
     internal:
-        name: ManualLab
+        name: 3DPrinting
         external: true
