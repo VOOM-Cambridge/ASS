@@ -76,7 +76,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
         logger.debug("Subscribe")
 
     def dispatch(self, payload):
-        logger.debug(f"ZMQ dispatch of {payload}")
+        logger.debug(f"ZMQ dispatch of ASS")
         self.zmq_out.send_json(payload)
 
     def run(self):

@@ -57,6 +57,7 @@ class AAS_save(multiprocessing.Process):
         return os.path.exists(filepath)
 
     def save(self, fileData):
+        logger.info("start saving")
         try:
             # Decode the message payload
             AAS = self.load_json(fileData)
@@ -79,8 +80,10 @@ class AAS_save(multiprocessing.Process):
             with open(filepath, 'w') as file:
                 json.dump(AAS, file, indent=4)
             print(f"Message saved to {filepath}")
+            logger.info("Messaege saved")
         except Exception as e:
             print("Error:", e)
+            logger.info("Messaege saved")
         
 
     def load_json(self, json_file):
@@ -117,8 +120,7 @@ class AAS_save(multiprocessing.Process):
                 msg_json = json.loads(msg)
                 print("MQTT_saving: mess recieved to save")
                 self.save(msg_json)
-                print("Messaege saved")
-                logger.info("Messaege saved")
+                
                 
     
     
