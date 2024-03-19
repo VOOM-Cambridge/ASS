@@ -13,7 +13,7 @@ services:
     #             aliases:
     #                 - collection.docker.local
     #     restart: unless-stopped
-    read_mqtt:
+    read_aas:
         extends:
             file: AAS_Read_MQTT/app.yml
             service: app
@@ -24,6 +24,18 @@ services:
             internal:
                 aliases:
                     - mqttread.docker.local
+        restart: unless-stopped
+    send_aas:
+        extends:
+            file: AAS_send/app.yml
+            service: app
+        volumes:
+            - ./AAS_data:/app/AAS_data
+            - ./config:/app/config
+        networks:
+            internal:
+                aliases:
+                    - mqttsend.docker.local
         restart: unless-stopped
 networks:
     internal:
