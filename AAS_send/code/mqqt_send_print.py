@@ -10,7 +10,7 @@ import random
 from datetime import datetime
 
 context = zmq.Context()
-logger = logging.getLogger("main.message_rewriter")
+logger = logging.getLogger("main.message_printer")
 
 class MQTT_forwarding_print(multiprocessing.Process):
     def __init__(self, config, zmq_conf):
@@ -84,8 +84,8 @@ class MQTT_forwarding_print(multiprocessing.Process):
                 print("MQTT_processing: mess recieved to process")
                 msg_send = self.messeage_for_label(msg_json, self.config_lab)
                 topic = self.topic + self.name + "/"
-                data = [topic, msg_send]
-                logger.info(data)
+                #data = [topic, msg_send]
+                logger.info("AAS sending with topic: ", topic)
                 out = json.dumps(msg_send)
                 client.publish(topic, out)
                 logger.info("Sent")

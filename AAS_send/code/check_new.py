@@ -7,13 +7,14 @@ from datetime import datetime
 import os, time
 
 context = zmq.Context()
+logger = logging.getLogger("check folder")
 
 class Check_for_new(multiprocessing.Process):
     def __init__(self, config, zmq_conf):
         super().__init__()#
         
         self.directory = config["Factory"]["file_directory_out"]
-        self.sent_files_file = "./app/sent_files.txt"
+        self.sent_files_file = "./data/sent_files.txt"
         self.printed_files = set()
 
         # declarations
@@ -30,22 +31,23 @@ class Check_for_new(multiprocessing.Process):
         
     def checkDirectory(self, directory_to_watch):
         files = os.listdir(directory_to_watch)
+        logger.info(files)
         for file_name in files:
             # Check if file is not already printed
             file_path = os.path.join(directory_to_watch, file_name)
-            if file not in self.printed_files and file_name.endswith('.json'):
+            if file_name not in self.printed_files and '.json' in file_name:
                 # Print the new file
-                print("New AAS detected:", file)
+                print("New AAS detected:", file_name)
                 # send files on to next
                 with open(file_path, 'r') as json_file:
                     json_data = json.load(json_file)
                 #msg_payload = json.dumps(json_data)
                 self.zmq_out.send_json(json_data)
                 # Add the file to the set of printed files
-                self.printed_files.add(file)
+                self.printed_files.add(file_name)
                 # Append the file name to the sent_files_file
                 with open(self.sent_files_file, 'a') as file:
-                    file.write(file + '\n')
+                    file.write(file_name + '\n')
         
     def run(self):
         self.do_connect()

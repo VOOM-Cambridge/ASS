@@ -6,5 +6,6 @@ services:
     privileged: true
     volumes:
       - /etc/localtime:/etc/localtime:ro
+      - ./data:/app/data
     devices:
       - /dev/input:/dev/input:ro
