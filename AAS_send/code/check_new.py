@@ -13,7 +13,7 @@ class Check_for_new(multiprocessing.Process):
         super().__init__()#
         
         self.directory = config["Factory"]["file_directory_out"]
-        self.sent_files_file = "./sent_files.txt"
+        self.sent_files_file = "./app/sent_files.txt"
         self.printed_files = set()
 
         # declarations
