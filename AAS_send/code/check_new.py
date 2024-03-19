@@ -50,6 +50,8 @@ class Check_for_new(multiprocessing.Process):
     def run(self):
         self.do_connect()
         print("ZMQ Connected")
+        direc = os.path.join(self.findCurrentStore(), self.directory)
+        self.directory = direc
         run = True
         if not os.path.exists(self.sent_files_file):
             open(self.sent_files_file, 'a').close()
@@ -59,3 +61,29 @@ class Check_for_new(multiprocessing.Process):
         while run:
             self.checkDirectory(self.directory)
             time.sleep(2)
+
+    def findCurrentStore(self):
+        path = os.getcwd()
+        if not self.folder_exists(path, "AAS_data"):
+            parent = os.path.abspath(os.path.join(path, os.pardir))
+            if not self.folder_exists(parent, "AAS_data"):
+                script_dir = os.path.abspath(os.path.join(parent, os.pardir))
+            else:
+                script_dir = parent
+        else:
+            script_dir = path
+        return script_dir
+
+    def folder_exists(self, directory, folder_name):
+        # Get the current working directory
+        # Construct the path to the folder
+        folder_path = os.path.join(directory, folder_name)
+        # Check if the folder exists
+        if os.path.exists(folder_path) and os.path.isdir(folder_path):
+            return True
+        else:
+            return False
+        
+    def file_exists(self, directory, filename):
+        filepath = os.path.join(directory, filename)
+        return os.path.exists(filepath)
