@@ -60,7 +60,7 @@ class AAS_save(multiprocessing.Process):
     def save(self, fileData):
         try:
             # Decode the message payload
-            AAS = fileData
+            AAS = self.load_json(fileData)
             print(AAS)
             name = "unkown"
             try:
@@ -83,6 +83,27 @@ class AAS_save(multiprocessing.Process):
         except Exception as e:
             print("Error:", e)
         
+
+    def load_json(self, json_file):
+        try:
+            with open(json_file, 'r') as file:
+                data = json.load(file)
+                if isinstance(data, dict):
+                    return data
+                else:
+                    # If data is not a dictionary, try converting it to one
+                    converted_data = json.loads(data)
+                    if isinstance(converted_data, dict):
+                        return converted_data
+                    else:
+                        print("Error: Unable to convert JSON to dictionary.")
+                        return None
+        except FileNotFoundError:
+            print("Error: File not found.")
+            return None
+        except json.JSONDecodeError:
+            print("Error: Invalid JSON format.")
+            return None
 
     def run(self):
         logger.info("Starting")

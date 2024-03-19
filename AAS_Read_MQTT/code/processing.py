@@ -108,7 +108,7 @@ class DataProcessing(multiprocessing.Process):
             self.checkForMultiple(datScanned)
             if self.multiple == False:
                 # only one to process 
-                print("QR code scnaned and recieved")
+                print("QR code scanned and recieved")
                 self.decodeFullData(datScanned)
             else:
                 #multiple to collct 
