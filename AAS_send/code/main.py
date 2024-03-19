@@ -12,7 +12,7 @@ import zmq
 # local
 
 from mqqt_send import MQTT_forwarding
-from mqqt_send_print import MQTT_Print
+from mqqt_send_print import MQTT_forwarding
 from check_new import Check_for_new
 
 logger = logging.getLogger("main")
@@ -39,7 +39,7 @@ def create_building_blocks(config):
     bbs["check"] = Check_for_new(config, check_Out)
 
     if config["Factory"]["sending_method"] == "Printing":
-        bbs["out"] = MQTT_Print(config, print_in)
+        bbs["out"] = MQTT_forwarding(config, print_in)
     elif config["Factory"]["sending_method"] == "MQTT":
         bbs["out"] = MQTT_forwarding(config, mqtt_in)
     # else: #"Final_AAS"
