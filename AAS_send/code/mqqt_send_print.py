@@ -7,7 +7,7 @@ import time
 import os, json
 import paho.mqtt.client as mqtt
 import random 
-from datetime import datetime, 
+from datetime import datetime
 
 context = zmq.Context()
 logger = logging.getLogger("main.message_rewriter")
