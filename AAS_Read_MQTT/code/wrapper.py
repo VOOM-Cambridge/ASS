@@ -67,7 +67,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
 
     def on_message(self, client, userdata, msg):
         print("found messeage")
-        logger.debug("Received message: %s", msg.payload.decode("utf-8"))
+        logger.debug("Received message:")
         payload = msg.payload.decode("utf-8")
         self.dispatch(payload)
     
