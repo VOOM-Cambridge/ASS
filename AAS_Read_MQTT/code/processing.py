@@ -23,7 +23,7 @@ class DataProcessing(multiprocessing.Process):
         self.zmq_out = None
         self.multiple = False
         self.buffer = ""
-        self.topic = config["factory"]["name"]
+        self.topic = config["Factory"]["name"]
 
     def do_connect(self):
         self.zmq_in = context.socket(self.zmq_conf['in']['type'])

@@ -17,7 +17,7 @@ class MQTT_forwarding(multiprocessing.Process):
         super().__init__()
 
 
-        self.name = config["factory"]["name"]
+        self.name = config["Factory"]["name"]
 
         mqtt_conf = config['external_layer']['mqtt']
         self.url = mqtt_conf['broker_send']

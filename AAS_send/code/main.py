@@ -38,9 +38,9 @@ def create_building_blocks(config):
 
     bbs["check"] = Check_for_new(config, check_Out)
 
-    if config["sending_method"] == "Printing":
+    if config["Factory"]["sending_method"] == "Printing":
         bbs["out"] = MQTT_Print(config, print_in)
-    elif config["sending_method"] == "MQTT":
+    elif config["Factory"]["sending_method"] == "MQTT":
         bbs["out"] = MQTT_forwarding(config, mqtt_in)
     # else: #"Final_AAS"
     #     bbs["out"] = makeSubmodels(config, mqtt_in)

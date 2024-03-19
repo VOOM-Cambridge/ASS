@@ -40,10 +40,10 @@ def create_building_blocks(config):
 
     mqtt_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4002", "bind": True} 
     save_in2 = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4002", "bind": False}
-    if config["sending_method"] == "Printing":
+    if config["Factory"]["sending_method"] == "Printing":
         bbs["scan"] = BarcodeScanner(config, {'out': scan_in})
         bbs["pro"] = DataProcessing(config, {'in': webIn, 'out': webOut})
-    elif config["sending_method"] == "MQTT":
+    elif config["Factory"]["sending_method"] == "MQTT":
         bbs["mqtt"] = MQTTServiceWrapper(config, {'out': mqtt_in})
         
     bbs["save1"] = AAS_save(config, {'in':save_in1})

@@ -61,13 +61,13 @@ class AAS_save(multiprocessing.Process):
         try:
             # Decode the message payload
             AAS = self.load_json(fileData)
-            print(AAS)
+            print(type(AAS))
             name = "unkown"
             try:
                 name = AAS[0]["idShort"]
             except:
                 name = "unkown"
-
+            print(name)
             i = 1
             while self.file_exists(self.directory, name + ".json"):
                 print("Directory  exisits")
