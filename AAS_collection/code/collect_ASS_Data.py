@@ -119,6 +119,7 @@ def add_data_together(example, data, config):
 
     #factory name details 
     example[0]["idShort"] = str(data["name"]) #+ str(random.randrange(1, 10000))
+    example[0]["identification"]["id"] = example[0]["identification"]["id"] + ":" + str(data["name"])
     example[0]["submodelElements"][1]["value"][0]["value"] = config["Factory"]["name"] # Factory name
     example[0]["submodelElements"][1]["value"][2]["value"] = config["Factory"]["address"]
     example[0]["submodelElements"][1]["value"][3]["value"] = config["Factory"]["email"]
@@ -574,7 +575,7 @@ def findCurrentStore():
 
 if __name__ == "__main__":
     script_dir_con = os.path.dirname(__file__) #<-- absolute dir the script is in
-    rel_path = "config/config_3d_IP.toml"
+    rel_path = "config/config.toml"
     abs_file_path = os.path.join(script_dir_con, rel_path)
     files = os.listdir(script_dir_con)
     print("**")

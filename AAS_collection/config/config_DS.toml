@@ -1,12 +1,12 @@
 
 [influx_info]
-url = "timeseries-db.docker.local:8086"
-org = "Robot_Lab"
-token = "robot-lab-2023"
+url = "http://timeseries-db.docker.local:8086"
+org = "Design-studio"
+token = "design-studio-lab"
 frequency_record_seconds = 1
 
 [frepple_info]
-URL = "http://frepple-3d:80"
+URL = "http://129.169.48.175:9000"
 password = "admin"
 user = "admin"
 
