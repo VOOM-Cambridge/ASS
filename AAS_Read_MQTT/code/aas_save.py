@@ -16,8 +16,7 @@ class AAS_save(multiprocessing.Process):
     def __init__(self, config, zmq_conf):
         super().__init__()
 
-
-        self.name = config["factory"]["name"]
+        self.name = config["Factory"]["name"]
         self.directory = "" 
         self.constants = []
         # declarations
