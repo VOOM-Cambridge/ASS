@@ -7,6 +7,7 @@ import time
 import os, json
 import paho.mqtt.client as mqtt
 import random 
+from datetime import datetime, 
 
 context = zmq.Context()
 logger = logging.getLogger("main.message_rewriter")
@@ -16,9 +17,21 @@ class MQTT_forwarding(multiprocessing.Process):
     def __init__(self, config, zmq_conf):
         super().__init__()
 
-        self.name = config["Factory"]["name"]
-        self.mqqt_rec = config["printer_send"]
 
+        self.name = config["factory"]["name"]
+        self.config_lab = config["factory"]
+
+        mqtt_conf = config['service_layer']['mqtt']
+        self.url = mqtt_conf['broker']
+        self.port = int(mqtt_conf['port'])
+        self.topic = mqtt_conf["topic"]
+        
+        self.topic_base = mqtt_conf['base_topic_template']
+
+        self.initial = mqtt_conf['reconnect']['initial']
+        self.backoff = mqtt_conf['reconnect']['backoff']
+        self.limit = mqtt_conf['reconnect']['limit']
+        self.constants = []
         # declarations
         self.zmq_conf = zmq_conf
         self.zmq_in = None
@@ -31,9 +44,38 @@ class MQTT_forwarding(multiprocessing.Process):
             self.zmq_in.connect(self.zmq_conf['in']["address"])
 
 
+    def mqtt_connect(self, client, first_time=False):
+        timeout = self.initial
+        exceptions = True
+        while exceptions:
+            try:
+                if first_time:
+                    client.connect(self.url, self.port, 60)
+                else:
+                    logger.error("Attempting to reconnect...")
+                    client.reconnect()
+                logger.info("Connected!")
+                time.sleep(self.initial)  # to give things time to settle
+                exceptions = False
+            except Exception:
+                logger.error(f"Unable to connect, retrying in {timeout} seconds")
+                time.sleep(timeout)
+                if timeout < self.limit:
+                    timeout = timeout * self.backoff
+                else:
+                    timeout = self.limit
+
+    def on_disconnect(self, client, _userdata, rc):
+        if rc != 0:
+            logger.error(f"Unexpected MQTT disconnection (rc:{rc}), reconnecting...")
+            self.mqtt_connect(client)
+
     def run(self):
         logger.info("Starting")
         self.do_connect()
+        client =mqtt.Client()
+        client.on_disconnect = self.on_disconnect
+        self.mqtt_connect(client, True)
         logger.info("ZMQ Connected")
         run = True
         while run:
@@ -41,35 +83,34 @@ class MQTT_forwarding(multiprocessing.Process):
                 msg = self.zmq_in.recv()
                 msg_json = json.loads(msg)
                 print("MQTT_processing: mess recieved to process")
-                msg_send = self.messeage_process(msg_json)
-                for reciever in self.mqqt_rec:
-                    topic = reciever["topic"] + self.name
-                    self.message_send(reciever["url"], reciever["port"], topic, msg_send)
-                
-    def message_send(host, port, topic, msg):
-        try:
-            client =mqtt.Client("aas_test" +str(random.randrange(1,1000)))
-            client.connect(host, port)
-            out = json.dumps(msg)
-            client.publish(topic,out)
-        except Exception:
-            print(Exception)
+                msg_send = self.messeage_for_label(msg_json, self.config_lab)
+                topic = self.topic + self.name + "/"
+                data = [topic, msg_send]
+                logger.info(data)
+                out = json.dumps(msg_send)
+                client.publish(topic, out)
+                logger.info("Sent")
     
-    def messeage_for_label(self, msg_in, config_label):
-        # process the data for printer format
+    def messeage_for_label(self, msg_in, config):
+        #process the data for printer format
         payload = {}
         payload["timestamp"] = "2024-02-29T09:49:20+00:00"
         payload["id"] = "line_1"
         payload["labelItems"] = []
         name = self.findName(msg_in)
         labelItem2 = {}
-        labelItem2["labelType"] = name
-        labelItem2["labelKey"] = "Sustainability Data"
-        labelItem2["labelValue"] = "Manual Assembly" 
+        labelItem2["labelType"] = "text"
+        labelItem2["labelKey"] = name
+        labelItem2["labelValue"] = "Sustainability Data"
+        payload["labelItems"].append(labelItem2)
+        labelItem2 = {}
+        labelItem2["labelType"] = "text"
+        labelItem2["labelKey"] = "From: " + config["name"]
+        labelItem2["labelValue"] = ""
         payload["labelItems"].append(labelItem2)
         labelItem2 = {}
         labelItem2["labelType"] = "QRAAS"
-        labelItem2["labelKey"] = "12345"
+        labelItem2["labelKey"] = name
         labelItem2["labelValue"] = msg_in
         payload["labelItems"].append(labelItem2)
 
@@ -81,7 +122,7 @@ class MQTT_forwarding(multiprocessing.Process):
         elif msg_in[0]["submodelElements"][0]["value"][2]["value"]:
             name = msg_in[0]["submodelElements"][0]["value"][2]["value"]
         else:
-            name = "AAS name no found"
+            name = "AAS name not found"
         return name
 
     

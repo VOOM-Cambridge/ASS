@@ -1,0 +1,5 @@
+{
+  "id": "productBarcode",
+  "parts": ["barcode2", "barcode2", "barcode3"],
+  "quantity": [1, 2, 3]
+}

@@ -41,6 +41,10 @@ def create_building_blocks(config):
         bbs["out"] = MQTT_Print(config, print_in)
     elif config["sending_method"] == "MQTT":
         bbs["out"] = MQTT_forwarding(config, mqtt_in)
+    # else: #"Final_AAS"
+    #     bbs["out"] = makeSubmodels(config, mqtt_in)
+
+
     
     return bbs
 

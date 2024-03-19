@@ -180,6 +180,30 @@ class fetchData(influxUploadData):
         out = [x[0] for x in output]
         return out
     
+    def jobFindBOM(self, barcode, numberDaysBack):
+        query_api = self.influx_client.query_api()
+        if barcode == None:
+            return "unkown"
+        query = 'from(bucket: "tracking_data_comp")\
+                |> range(start: -' + str(numberDaysBack) + ')\
+                |> filter(fn: (r) => r["_measurement"] == "Tracking_comp")\
+                |> filter(fn: (r) => r["_field"] == "child")\
+                |> filter(fn: (r) => r["parent"] == "'+ barcode +'")'
+        table = query_api.query(query)
+        output = table.to_values(columns=['_value'])
+        out = {}
+        out["id"] = barcode
+        out["parts"] = []
+        out["quantity"] = []
+        for x in output:
+            if x[0] in out["parts"]:
+                ind = out["parts"].index(x[0])
+                out["quantity"][ind] = out["quantity"][ind] +1
+            else:
+                out["parts"].append(x[0])
+                out["quantity"].append(1)
+        return out
+    
     def jobFindParents(self, barcode, numberDaysBack):
         query_api = self.influx_client.query_api()
         if barcode == None:

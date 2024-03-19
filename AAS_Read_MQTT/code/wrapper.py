@@ -18,7 +18,6 @@ class MQTTServiceWrapper(multiprocessing.Process):
         self.url = mqtt_conf['broker']
         self.port = int(mqtt_conf['port'])
 
-        self.topic_base = mqtt_conf['base_topic_template']
         self.topic = mqtt_conf['topic']
 
         self.initial = mqtt_conf['reconnect']['initial']
@@ -67,6 +66,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
             self.mqtt_connect(client)
 
     def on_message(self, client, userdata, msg):
+        print("found messeage")
         logger.debug("Received message: %s", msg.payload.decode("utf-8"))
         payload = msg.payload.decode("utf-8")
         self.dispatch(payload)
@@ -92,4 +92,4 @@ class MQTTServiceWrapper(multiprocessing.Process):
         logger.info(f'connecting to {self.url}:{self.port}')
         self.mqtt_connect(client, True)
         logger.info("Looping and connected")
-        client.loop_start()
+        client.loop_forever()
