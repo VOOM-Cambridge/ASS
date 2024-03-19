@@ -58,10 +58,14 @@ class AAS_save(multiprocessing.Process):
 
     def save(self, fileData):
         logger.info("start saving")
+        AAS = fileData
+        logging.info(type(AAS))
+        
         try:
             # Decode the message payload
-            AAS = self.load_json(fileData)
+            AAS = json.loads(AAS["AAS data"])
             logging.info(type(AAS))
+
             name = "unkown"
             try:
                 name = AAS[0]["idShort"]
@@ -83,29 +87,6 @@ class AAS_save(multiprocessing.Process):
             logger.info("Messaege saved")
         except Exception as e:
             print("Error:", e)
-            logger.info("Messaege saved")
-        
-
-    def load_json(self, json_file):
-        try:
-            with open(json_file, 'r') as file:
-                data = json.load(file)
-                if isinstance(data, dict):
-                    return data
-                else:
-                    # If data is not a dictionary, try converting it to one
-                    converted_data = json.loads(data)
-                    if isinstance(converted_data, dict):
-                        return converted_data
-                    else:
-                        print("Error: Unable to convert JSON to dictionary.")
-                        return None
-        except FileNotFoundError:
-            print("Error: File not found.")
-            return None
-        except json.JSONDecodeError:
-            print("Error: Invalid JSON format.")
-            return None
 
     def run(self):
         logger.info("Starting")
@@ -118,11 +99,11 @@ class AAS_save(multiprocessing.Process):
             while self.zmq_in.poll(500, zmq.POLLIN):
                 msg = self.zmq_in.recv()
                 msg_json = json.loads(msg)
+                logging.info(type(msg_json))
                 print("MQTT_saving: mess recieved to save")
-                self.save(msg_json["AAS data"])
-                
-                
-    
-    
-                    
+                try:
+                    self.save(json.loads(msg_json))
+                except:
+                    self.save(msg_json)
+                 
         

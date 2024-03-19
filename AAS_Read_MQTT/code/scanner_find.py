@@ -128,10 +128,7 @@ class BarcodeScanner(multiprocessing.Process):
         return False
 
     def grab_exclusive_access(self):
-        try:
-            self.scanner_device.grab()
-        except:
-            logger.info("Can't grab rfid")
+        self.scanner_device.grab()
 
     def do_connect(self):
         self.zmq_out = context.socket(self.zmq_conf['out']['type'])
@@ -166,5 +163,5 @@ class BarcodeScanner(multiprocessing.Process):
             await self.dispatch(payload)
 
     async def dispatch(self, payload):
-        logger.debug(f"ZMQ dispatch of {payload}")
+        logger.debug(f"ZMQ dispatch of AAS QR data")
         await self.zmq_out.send_json(payload)

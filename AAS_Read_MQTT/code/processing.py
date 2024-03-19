@@ -40,31 +40,22 @@ class DataProcessing(multiprocessing.Process):
         print("connected processing")
 
     def decodeFullData(self, dataIn):
+        logging.info("Decoding data")
         try:
             dataDecode = base64.b64decode(dataIn)
             uncompressed = zlib.decompress(dataDecode)
             data = uncompressed.decode()
             res = json.loads(data)
-            print(res)
-
-            if res["idShort"]:
-                name = "./data/" + res[0]["idShort"] + ".json"
-            else:
-                print("no id short")
-                name = "./data/" + "output.json" 
-
-            with open(name, "w") as outfile:
-                outfile.write(data)
-            print(data)
-            self.forwardOnData(data)
+            logging.info("Sending on")
+            self.forwardOnData(res)
         except Exception as e:
             print("Error in processing")
             print(e)
             logger.error(e)
 
     def forwardOnData(self, dataToSend):
-        self.zmq_out.send_json({'topic': self.topic, 'payload': {"type": "AAS","id": dataToSend}})
-        print("Sent on to next thread" )
+        logging.info("Sent on to next thread")
+        self.zmq_out.send_json({"AAS data": dataToSend})
 
 
     def checkForMultiple(self, dataIn):
@@ -85,7 +76,7 @@ class DataProcessing(multiprocessing.Process):
             pass
         try:
             msg = self.zmq_in.recv(zmq.NOBLOCK)
-            logger.debug(f"got {msg}")
+            logger.debug("Got messeage from barcode in processing")
             return json.loads(msg)
         except zmq.ZMQError:
             pass
@@ -101,14 +92,14 @@ class DataProcessing(multiprocessing.Process):
             try:
                 barcode = msg['barcode']
             except KeyError:
-                logger.warning(f"Message did not not have required keys: {msg}")
+                logger.warning("Message did not not have required keys")
                 continue
             datScanned= barcode
             print("barcode/qr code found")
             self.checkForMultiple(datScanned)
             if self.multiple == False:
                 # only one to process 
-                print("QR code scanned and recieved")
+                logging.info("QR code scanned and recieved")
                 self.decodeFullData(datScanned)
             else:
                 #multiple to collct 

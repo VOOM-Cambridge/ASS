@@ -43,11 +43,13 @@ def create_building_blocks(config):
     if config["Factory"]["sending_method"] == "Printing":
         bbs["scan"] = BarcodeScanner(config, {'out': scan_in})
         bbs["pro"] = DataProcessing(config, {'in': webIn, 'out': webOut})
+        bbs["save1"] = AAS_save(config, {'in':save_in1})
     elif config["Factory"]["sending_method"] == "MQTT":
         bbs["mqtt"] = MQTTServiceWrapper(config, {'out': mqtt_in})
+        bbs["save2"] = AAS_save(config, {'in':save_in2})
         
-    bbs["save1"] = AAS_save(config, {'in':save_in1})
-    bbs["save1"] = AAS_save(config, {'in':save_in2})
+    
+    
 
     return bbs
 
