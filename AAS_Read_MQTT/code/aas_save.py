@@ -119,7 +119,7 @@ class AAS_save(multiprocessing.Process):
                 msg = self.zmq_in.recv()
                 msg_json = json.loads(msg)
                 print("MQTT_saving: mess recieved to save")
-                self.save(msg_json)
+                self.save(msg_json["AAS data"])
                 
                 
     
