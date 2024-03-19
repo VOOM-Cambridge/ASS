@@ -7,7 +7,6 @@ services:
     #         service: app
     #     volumes:
     #         - ./AAS_data:/app/AAS_data
-            # - ./config:/app/config
     #     networks:
     #         internal:
     #             aliases:

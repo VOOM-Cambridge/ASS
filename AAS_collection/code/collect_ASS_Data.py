@@ -106,7 +106,7 @@ def create_json(dict_file):
                 return 1
         rel_path = "/output/json/" + dict_file["name"].replace(".", "_") + str(i) + ".json"
         rel_path = rel_path.replace(" ", "_")
-        abs_file_path = r'%s' % (script_dir + rel_path)
+        abs_file_path = os.path.join(script_dir + rel_path)
         i = i+ 1 
     with open(abs_file_path, "w") as outfile:   
         outfile.write(json_object)
@@ -118,7 +118,7 @@ def add_data_together(example, data, config):
     #del example[0]["submodelElements"][3]["value"][1]
 
     #factory name details 
-    example[0]["idShort"] = config["Factory"]["name"] #+ str(random.randrange(1, 10000))
+    example[0]["idShort"] = str(data["name"]) #+ str(random.randrange(1, 10000))
     example[0]["submodelElements"][1]["value"][0]["value"] = config["Factory"]["name"] # Factory name
     example[0]["submodelElements"][1]["value"][2]["value"] = config["Factory"]["address"]
     example[0]["submodelElements"][1]["value"][3]["value"] = config["Factory"]["email"]
@@ -224,6 +224,32 @@ def findAASFromDirec(directory, filename):
             return data_example
     else:
         return None
+
+def make_AAS_file(barcodeParent, config,  script_dir):
+    new_path = "AAS_data/template/" 
+    rel_path = os.path.join(script_dir, new_path)
+    data = findAASFromDirec(rel_path, config["template_name"])
+
+    data[0]["idShort"] = barcodeParent
+
+    directory_path  = "AAS_data/order/" 
+    rel_path = directory_path + barcodeParent.replace(".", "_").replace(" ", "_") + ".json"
+    abs_file_path = os.path.join(script_dir, rel_path)
+    i = 1
+    while os.path.isfile(abs_file_path) and os.access(abs_file_path, os.R_OK):
+        with open(abs_file_path, "r") as outfile:
+            dataIn = json.load(outfile)
+            if data == dataIn: 
+                #print("Data already added")
+                return 1
+        rel_path = directory_path  + barcodeParent.replace(".", "_").replace(" ", "_") + str(i) + ".json"
+        abs_file_path = os.path.join(script_dir, rel_path)
+        i = i+ 1 
+
+    with open(abs_file_path, "w") as outfile:   
+        outfile.write(data)
+        return 0
+
 
 def make_parent_AAS(BOM, parent, config,  script_dir):
     totalEnergy = 0
@@ -512,7 +538,11 @@ def updateOrderASS(config, frepple, timeSinceLast, fileType, locationOut):
                 BOM = influxClient.jobFindChildren(order[0], 300)
                 if len(BOM) > 0:
                     # create an order ASS 
-                    make_parent_AAS(BOM, order[0], config,  script_dir)
+                    
+                    if config["Make_AAS_from"] and config["Make_AAS_from"] == "File":
+                        make_AAS_file(order[0], config, script_dir)
+                    else:
+                        make_parent_AAS(BOM, order[0], config,  script_dir)
 
 
 def file_exists(directory, filename):
