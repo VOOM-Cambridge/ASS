@@ -12,13 +12,16 @@ user = "admin"
 [Factory]
 idShort = "Manual_Assembly"
 name = "Manual Assembly"                                                               #"3D Printing or Robot Lab"
-machine = [["Screwdriver"]]
+machine = ["Screwdriver"]
 frequencyUpdate = 1
 fileType = ["AAS", "csv"]
 first_check = 300                                                                      #hours
 address = "Manual Assembly, Robot Lab back, Insitute for manufacturing, Cambridge, UK"
 email = "sjb351@cam.ac.uk"
 process = ["manual assembly"]
+Make_AAS_from = "Data"
+template_name = "Submodels_SR3.json"
+
 
 [energy_use]
 idShort = "energy_use"

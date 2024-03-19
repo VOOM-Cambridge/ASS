@@ -539,7 +539,7 @@ def updateOrderASS(config, frepple, timeSinceLast, fileType, locationOut):
                 if len(BOM) > 0:
                     # create an order ASS 
                     
-                    if config["Make_AAS_from"] and config["Make_AAS_from"] == "File":
+                    if config["Factory"]["Make_AAS_from"] and config["Factory"]["Make_AAS_from"] == "File":
                         make_AAS_file(order[0], config, script_dir)
                     else:
                         make_parent_AAS(BOM, order[0], config,  script_dir)
@@ -571,11 +571,14 @@ def findCurrentStore():
         script_dir = path
     return script_dir
 
+
 if __name__ == "__main__":
     script_dir_con = os.path.dirname(__file__) #<-- absolute dir the script is in
-    rel_path = "config\\config_3d_IP.toml"
+    rel_path = "config/config_3d_IP.toml"
     abs_file_path = os.path.join(script_dir_con, rel_path)
-
+    files = os.listdir(script_dir_con)
+    print("**")
+    print(files)
     with open(abs_file_path, mode="rb") as fp:
         config = tomli.load(fp)
 
