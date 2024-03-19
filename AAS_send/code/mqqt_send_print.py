@@ -21,10 +21,10 @@ class MQTT_forwarding(multiprocessing.Process):
         self.name = config["factory"]["name"]
         self.config_lab = config["factory"]
 
-        mqtt_conf = config['service_layer']['mqtt']
+        mqtt_conf = config['internal_layer']['mqtt']
         self.url = mqtt_conf['broker']
         self.port = int(mqtt_conf['port'])
-        self.topic = mqtt_conf["topic"]
+        self.topic = mqtt_conf["topic_print"]
         
         self.topic_base = mqtt_conf['base_topic_template']
 

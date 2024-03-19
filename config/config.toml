@@ -1,0 +1,38 @@
+# config file for 3D printing lab
+[Factory]
+name = "3D Printing"
+sending_method = "MQTT" # "Printing" or "MQTT" or "Store"
+# sending method = None means the AASX will be created
+file_directory_out = "AAS_Data/order/"
+
+# 3D Printing: 129.169.48.173
+# Robot Lab: 129.169.48.176
+# Manual Assembly: 129.169.48.174
+# Design Studio: 129.169.48.175
+
+[external_layer.mqtt]
+broker = "mqtt.docker.local"
+broker_send = "129.169.48.174"
+
+port = 1883
+base_topic_template = ""
+topic_send = "AAS/send/in/"
+
+reconnect.initial = 5 # seconds
+reconnect.backoff = 2 # multiplier
+reconnect.limit = 60  # seconds
+
+[input.scanner]
+serial = "0581_011c"
+connection_point = ["0", "1", "1.0"]
+
+[internal_layer.mqtt]
+broker = "mqtt.docker.local"
+port = 1883
+base_topic_template = ""
+topic = "AAS/send/in/#"
+topic_print = "print/"
+
+reconnect.initial = 5 # seconds
+reconnect.backoff = 2 # multiplier
+reconnect.limit = 60  # seconds

@@ -14,7 +14,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
     def __init__(self, config, zmq_conf):
         super().__init__()
 
-        mqtt_conf = config['service_layer']['mqtt']
+        mqtt_conf = config['internal_layer']['mqtt']
         self.url = mqtt_conf['broker']
         self.port = int(mqtt_conf['port'])
 

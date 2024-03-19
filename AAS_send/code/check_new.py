@@ -12,7 +12,7 @@ class Check_for_new(multiprocessing.Process):
     def __init__(self, config, zmq_conf):
         super().__init__()#
         
-        self.directory = config["Factory"]["file_directory"]
+        self.directory = config["Factory"]["file_directory_out"]
         self.sent_files_file = "./sent_files.txt"
         self.printed_files = set()
 

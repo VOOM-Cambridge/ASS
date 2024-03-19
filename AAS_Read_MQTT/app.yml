@@ -9,7 +9,5 @@ services:
     devices:
       - /dev/input:/dev/input:ro
     volumes:
-      - ./config:/app/config
-      - ./data:/app/data
       - /etc/localtime:/etc/localtime:ro
       - /run/udev:/run/udev:ro
