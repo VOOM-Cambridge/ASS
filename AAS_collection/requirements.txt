@@ -2,7 +2,7 @@ paho-mqtt==1.6.1
 chevron==0.14.0
 tomli==2.0.1
 pyzmq==23.2.1
-pyi40aas=0.2.3
+pyi40aas==0.2.3
 smbus2
 bcr-libraries
 spidev
