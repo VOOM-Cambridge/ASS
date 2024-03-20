@@ -1,0 +1,83 @@
+[
+    {
+      "ordered": true,
+      "allowDuplicates": false,
+      "semanticId": {
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "local": false,
+            "value": "\"\"",
+            "index": 0,
+            "idType": "IRI"
+          }
+        ]
+      },
+      "constraints": [],
+      "hasDataSpecification": [],
+      "idShort": "plasticlid",
+      "category": "PARAMETER",
+      "modelType": {
+        "name": "SubmodelElementCollection"
+      },
+      "value": [
+        {
+          "value": "PL1",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "local": false,
+                "value": "\"\"",
+                "index": 0,
+                "idType": "IRI"
+              }
+            ]
+          },
+          "constraints": [],
+          "hasDataSpecification": [],
+          "idShort": "partid",
+          "modelType": {
+            "name": "Property"
+          },
+          "valueType": "string",
+          "kind": "Instance"
+        },
+        {
+          "value": "1",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "local": false,
+                "value": "\"\"",
+                "index": 0,
+                "idType": "IRI"
+              }
+            ]
+          },
+          "constraints": [],
+          "hasDataSpecification": [],
+          "idShort": "quantity",
+          "modelType": {
+            "name": "Property"
+          },
+          "valueType": "string",
+          "kind": "Instance",
+          "descriptions": [
+            {
+              "language": "en-us",
+              "text": "quanityt of parts for 1 product"
+            }
+          ]
+        }
+      ],
+      "descriptions": [
+        {
+          "language": "en-us",
+          "text": "\"\""
+        }
+      ]
+    }
+]
+  

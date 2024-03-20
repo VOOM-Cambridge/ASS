@@ -4,6 +4,7 @@ from fetchDataInflux import fetchData
 import tomli
 from influxdb_client import InfluxDBClient, Point
 from datetime import datetime, timedelta
+from freppleAPImodule import freppleConnect
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 # rel_path = "/output/AAS/Submodel.json"
 
@@ -25,26 +26,25 @@ with open(abs_file_path, mode="rb") as fp:
     config = tomli.load(fp)
 
 # # connect to MES
-# user =config["frepple_info"]["user"]
-# password = config["frepple_info"]["password"]
-# URL = config["frepple_info"]["URL"]
+user =config["frepple_info"]["user"]
+password = config["frepple_info"]["password"]
+URL = config["frepple_info"]["URL"]
+frepple = freppleConnect(user, password, URL)
 
-# configInflux = config["influx_info"]
+configInflux = config["influx_info"]
+influxClient = fetchData(configInflux)
 # fileType = config["Factory"]["fileType"]
 # # intialise the connection to the database and MES
-# influxClient = fetchData(configInflux)
+
+
+#data = frepple.ordersIn("GETALL", {"name": "EMS00000"})
 
 # #sTime, eTime = influxClient.jobLengthTime("", 200)
 # data = influxClient.jobFindChildren("3DOR1000", 100)
-# #data = influxClient.jobFindParents('1177', 100)
+data = influxClient.jobFindBOM('3DOR1000', 100)
 
 # #data = influxClient.findClosestBarcode(endTime, "3DP100400")
-# print(data)
+print(data)
 
 # for dat in data:
 #     print(influxClient.jobFindChildren(dat, 100))
-    
-x = "C:\\Users\\sjb351\\OneDrive - University of Cambridge\\Work file\\Programing.Development\\AAS work\\AAS_data\\product\\blob_2_aw_gcode.json"
-
-ans = os.path.isFile()
-print(ans)

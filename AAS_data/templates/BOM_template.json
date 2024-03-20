@@ -1,0 +1,18 @@
+[
+ {
+  "semanticId": {
+    "keys": []
+  },
+  "qualifiers": [],
+  "hasDataSpecification": [],
+  "identification": {
+    "idType": "IRI",
+    "id": "urn:cam.ac.uk:ifm:sub:1:1:bom"
+  },
+  "idShort": "",
+  "modelType": {
+    "name": "Submodel"
+  },
+  "kind": "Instance",
+  "submodelElements": []
+}]

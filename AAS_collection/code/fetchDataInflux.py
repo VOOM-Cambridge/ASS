@@ -202,6 +202,9 @@ class fetchData(influxUploadData):
             else:
                 out["parts"].append(x[0])
                 out["quantity"].append(1)
+        for i in range(len(out["quantity"])):
+           out["quantity"][i]= str(out["quantity"][i])
+           out["parts"][i]= out["parts"][i].replace(" ", "_").replace(".", "_")
         return out
     
     def jobFindParents(self, barcode, numberDaysBack):

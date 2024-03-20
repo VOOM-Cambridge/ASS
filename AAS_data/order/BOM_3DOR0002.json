@@ -1,0 +1,340 @@
+[
+    {
+        "semanticId": {
+            "keys": []
+        },
+        "qualifiers": [],
+        "hasDataSpecification": [],
+        "identification": {
+            "idType": "IRI",
+            "id": "urn:cam.ac.uk:ifm:sub:1:1:bom"
+        },
+        "idShort": "BOM_3DOR0002",
+        "modelType": {
+            "name": "Submodel"
+        },
+        "kind": "Instance",
+        "submodelElements": [
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "\"\"",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "partnumber_0",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "value": "3DBGV10001",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "barcodepart_0",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "1",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "quantitypart_0",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance",
+                        "descriptions": [
+                            {
+                                "language": "en-us",
+                                "text": "quanityt of parts for 1 product"
+                            }
+                        ]
+                    }
+                ],
+                "descriptions": [
+                    {
+                        "language": "en-us",
+                        "text": "\"\""
+                    }
+                ]
+            },
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "\"\"",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "partnumber_1",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "value": "3DBGV10002",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "barcodepart_1",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "1",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "quantitypart_1",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance",
+                        "descriptions": [
+                            {
+                                "language": "en-us",
+                                "text": "quanityt of parts for 1 product"
+                            }
+                        ]
+                    }
+                ],
+                "descriptions": [
+                    {
+                        "language": "en-us",
+                        "text": "\"\""
+                    }
+                ]
+            },
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "\"\"",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "partnumber_2",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "value": "3DBGV20001",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "barcodepart_2",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "1",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "quantitypart_2",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance",
+                        "descriptions": [
+                            {
+                                "language": "en-us",
+                                "text": "quanityt of parts for 1 product"
+                            }
+                        ]
+                    }
+                ],
+                "descriptions": [
+                    {
+                        "language": "en-us",
+                        "text": "\"\""
+                    }
+                ]
+            },
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "\"\"",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "partnumber_3",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "value": "3DBGV20002",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "barcodepart_3",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "1",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "\"\"",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "quantitypart_3",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance",
+                        "descriptions": [
+                            {
+                                "language": "en-us",
+                                "text": "quanityt of parts for 1 product"
+                            }
+                        ]
+                    }
+                ],
+                "descriptions": [
+                    {
+                        "language": "en-us",
+                        "text": "\"\""
+                    }
+                ]
+            }
+        ]
+    }
+]

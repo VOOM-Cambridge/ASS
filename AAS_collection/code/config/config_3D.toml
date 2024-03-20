@@ -21,14 +21,17 @@ first_check = 300                                                      #hours
 address = "3D Printing Lab, Insitute for manufacturing, Cambridge, UK"
 email = "sjb351@cam.ac.uk"
 process = ["3D Printing"]
+Make_AAS_from = "Data"
+template_name = "Submodels_SR3.json"
+
 
 [energy_use]
 idShort = "energy_use"
 name = "energy use"
-frequency = "per product"                 # per product, per order, per second
-units = "kWh"                             #Units of the data, no impact on colelction
-method = "signal"                         # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
-machine_list = ["Printer_1", "Printer_2"]
+frequency = "per product"                                           # per product, per order, per second
+units = "kWh"                                                       #Units of the data, no impact on colelction
+method = "signal"                                                   # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine_list = ["Printer_1", "Printer_2", "Printer_3", "Printer_4"]
 
 [material_waste]
 idShort = "material_waste"

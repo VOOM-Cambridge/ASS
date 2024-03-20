@@ -8,6 +8,8 @@ import time
 import pytz
 import random
 from pathlib import Path
+import import_submodel_continious
+from BG import BackgroundUpdater
 
 utc=pytz.UTC
 
@@ -31,7 +33,7 @@ def findEnergyData(config, orderNum, sTimeIn, eTimeIn):
     except:
         print("no order found")
     if config["frequency"] == "per product":
-        dataBack = frepple.ordersIn("GET", {"name": str(orderNum)})
+        dataBack = frepple.ordersIn("GETALL", {"name": str(orderNum)})
         if dataBack != None:
             numberInOrder = dataBack["quantity"]
     else: # frequency is per order or assumed to be per order type
@@ -111,15 +113,27 @@ def create_json(dict_file):
     with open(abs_file_path, "w") as outfile:   
         outfile.write(json_object)
         return 0
+    
+def checkId(barcodeId):
+    if barcodeId[0].isnumeric():
+        return "X" + barcodeId
+    else:
+        return barcodeId
 
+def undoCheckId(barcodeId):
+    if barcodeId[0]== "X":
+        return barcodeId[1:]
+    else:
+        return barcodeId
+    
 def add_data_together(example, data, config):
     # remove extra element
     #del example[0]["submodelElements"][6]
     #del example[0]["submodelElements"][3]["value"][1]
-
+    newId = checkId(str(data["name"]))
     #factory name details 
-    example[0]["idShort"] = str(data["name"]) #+ str(random.randrange(1, 10000))
-    example[0]["identification"]["id"] = example[0]["identification"]["id"] + ":" + str(data["name"])
+    example[0]["idShort"] = newId #+ str(random.randrange(1, 10000))
+    example[0]["identification"]["id"] = (example[0]["identification"]["id"])[:-7] + config["Factory"]["name"].replace(" ", "_") + ":" + str(data["name"])
     example[0]["submodelElements"][1]["value"][0]["value"] = config["Factory"]["name"] # Factory name
     example[0]["submodelElements"][1]["value"][2]["value"] = config["Factory"]["address"]
     example[0]["submodelElements"][1]["value"][3]["value"] = config["Factory"]["email"]
@@ -138,24 +152,36 @@ def add_data_together(example, data, config):
     # Total material
     mat_type_history = []
     if type(data["material use"]) == list:
+        if len(data["material use"]) > 1:
+            try:
+                del example[0]["submodelElements"][3]["value"][1]
+                del example[0]["submodelElements"][3]["value"][2]
+            except:
+                try:
+                    del example[0]["submodelElements"][3]["value"][1]
+                except:
+                    x = True
         i = 0
         for material in data["material use"]:
             matType = str(data["material type"][i])
             if i == 0:
-                example[0]["submodelElements"][3]["value"][0]["value"] = str(material)
-                example[0]["submodelElements"][3]["value"][0]["idShort"] = matType
+                example[0]["submodelElements"][3]["value"][0]["value"][0]["value"] = str(material)
+                example[0]["submodelElements"][3]["value"][0]["idShort"] = matType.replace(" ", "_")
                 mat_type_history.append(matType)
+                #print(example[0]["submodelElements"][3]["value"])
             else:
                 # add new material 
-                example[0]["submodelElements"][3]["value"].append(str(example[0]["submodelElements"][3]["value"][0]))
-                example[0]["submodelElements"][3]["value"][i]["value"] = str(material)
+                example[0]["submodelElements"][3]["value"].append(example[0]["submodelElements"][3]["value"][0])
+                #print(example[0]["submodelElements"][3]["value"][i])
+                example[0]["submodelElements"][3]["value"][i]["value"][0]["value"] = str(material)
                 if matType in mat_type_history:
-                    example[0]["submodelElements"][3]["value"][i]["idShort"] = matType + "_" + str(material)
+                    example[0]["submodelElements"][3]["value"][i]["idShort"] = matType.replace(" ", "_") + "_" + str(material)
                 else:
-                    example[0]["submodelElements"][3]["value"][i]["idShort"] = matType
+                    example[0]["submodelElements"][3]["value"][i]["idShort"] = matType.replace(" ", "_")
                 mat_type_history.append(matType)
+                print(example[0]["submodelElements"][3]["value"])
             i +=1
-    else:
+    if i < 1:
         try:
             del example[0]["submodelElements"][3]["value"][1]
         except:
@@ -176,8 +202,8 @@ def add_data_together(example, data, config):
         else:
             # create new one
             example[0]["submodelElements"][4]["value"].append(str(example[0]["submodelElements"][4]["value"][0]))
-            example[0]["submodelElements"][4]["value"][i]["value"] = str(proc)
-            example[0]["submodelElements"][4]["value"][i]["idShort"] = "Process_" + str(i) + str(proc)
+            example[0]["submodelElements"][4]["value"][i]["value"] = str(proc).replace(" ", "_")
+            example[0]["submodelElements"][4]["value"][i]["idShort"] = "Process_" + str(i) + str(proc).replace(" ", "_")
         i +=1
 
     # items = data["item"] 
@@ -231,7 +257,7 @@ def make_AAS_file(barcodeParent, config,  script_dir):
     rel_path = os.path.join(script_dir, new_path)
     data = findAASFromDirec(rel_path, config["template_name"])
 
-    data[0]["idShort"] = barcodeParent
+    data[0]["idShort"] = checkId(barcodeParent)
 
     directory_path  = "AAS_data/order/" 
     rel_path = directory_path + barcodeParent.replace(".", "_").replace(" ", "_") + ".json"
@@ -250,6 +276,7 @@ def make_AAS_file(barcodeParent, config,  script_dir):
     with open(abs_file_path, "w") as outfile:   
         outfile.write(data)
         return 0
+
 
 
 def make_parent_AAS(BOM, parent, config,  script_dir):
@@ -295,7 +322,7 @@ def make_parent_AAS(BOM, parent, config,  script_dir):
             mat = len(dictOut[0]["submodelElements"][3]["value"]) 
             for i in range(mat):
                 tempMat = dictOut[0]["submodelElements"][3]["value"][i]["idShort"] 
-                tempVal = dictOut[0]["submodelElements"][3]["value"][i]["value"]
+                tempVal = dictOut[0]["submodelElements"][3]["value"][i]["value"][0]["value"]
                 print(tempMat)
                 print(tempVal)
                 if type(tempVal) == list:
@@ -303,6 +330,8 @@ def make_parent_AAS(BOM, parent, config,  script_dir):
                         tempVal = float(tempVal[0]["value"])
                     except:
                         print("can't find value material")
+                elif type(tempVal) == str:
+                    tempVal = float(tempVal)
                 else:
                     tempVal = 0
                 
@@ -314,7 +343,7 @@ def make_parent_AAS(BOM, parent, config,  script_dir):
                     totalMaterial.append(float(tempVal))
                     
             #factory name details 
-            name = dictOut[0]["idShort"] 
+            name = undoCheckId(dictOut[0]["idShort"])
             factName = dictOut[0]["submodelElements"][1]["value"][0]["value"] 
             factAddress =dictOut[0]["submodelElements"][1]["value"][2]["value"]
             email = dictOut[0]["submodelElements"][1]["value"][3]["value"]
@@ -428,7 +457,7 @@ def add_to_excel(dict_file, csv_file):
                     writer.writerow(mydictrows)
 
 def findOrderInfo(barcode):
-    dataBack = frepple.ordersIn("GET", {"name": str(barcode)})
+    dataBack = frepple.ordersIn("GETALL", {"name": str(barcode)})
     if len(dataBack) !=0:
         if type(dataBack) == list:
             itemName = dataBack[0]["item"]
@@ -437,7 +466,7 @@ def findOrderInfo(barcode):
             itemName = dataBack["item"]
             quantity = dataBack["quantity"]
         return itemName, quantity
-        # no order data from frepple try to find item informaiton based on file
+     #   no order data from frepple try to find item informaiton based on file
     # dataBack = frepple.itemsFunc("GETALL", {"decritpion": str(barcode)})
     # if len(dataBack) !=0:
     #     if type(dataBack) == list:
@@ -454,7 +483,7 @@ def findOrderInfo(barcode):
 
 def createDictAndSave(dat, last_reading_stored, config):
     dictionaryOdASSData = {}
-    dictionaryOdASSData["name"] = dat[3]
+    dictionaryOdASSData["name"] = dat[3].replace(" ", "_").replace(".", "_")
     itemName, quantity = findOrderInfo(dat[3])
     dictionaryOdASSData["item"] = itemName
     dictionaryOdASSData["quantity"] = quantity
@@ -520,6 +549,20 @@ def updateExcelorDict(config, freppleConnect, timeSinceLast, fileType):
         print("file found")
 
     return last_reading_stored
+
+
+def make_AASX(barcodeNum , config, script_dir):
+    path_local = "AAS_data/order/"
+    directory  =  os.path.join(script_dir, path_local) 
+    path_local = "AAS_data/templates/"
+    templateDir  =  os.path.join(script_dir, path_local) 
+    BOM = influxClient.jobFindBOM(barcodeNum, 200)
+    import_submodel_continious.bomsubmodel(barcodeNum, BOM, directory, templateDir, config["Factory"]["name"])
+    path_local = "AAS_data/in/"
+    directoryIn  =  os.path.join(script_dir, path_local)
+    newUpdater = BackgroundUpdater(directoryIn, directory)
+    newUpdater.run(barcodeNum)
+
         
 def updateOrderASS(config, frepple, timeSinceLast, fileType, locationOut):
     script_dir =  findCurrentStore()
@@ -538,10 +581,11 @@ def updateOrderASS(config, frepple, timeSinceLast, fileType, locationOut):
                 # find all children asociated with the ASS 
                 BOM = influxClient.jobFindChildren(order[0], 300)
                 if len(BOM) > 0:
-                    # create an order ASS 
-                    
-                    if config["Factory"]["Make_AAS_from"] and config["Factory"]["Make_AAS_from"] == "File":
+                    # create an order AAS 
+                    if config["Factory"]["Make_AAS_from"] == "File":
                         make_AAS_file(order[0], config, script_dir)
+                    if config["Factory"]["Make_AAS_from"] == "AASX":
+                        make_AASX(order[0], config, script_dir)
                     else:
                         make_parent_AAS(BOM, order[0], config,  script_dir)
 
@@ -575,7 +619,7 @@ def findCurrentStore():
 
 if __name__ == "__main__":
     script_dir_con = os.path.dirname(__file__) #<-- absolute dir the script is in
-    rel_path = "config/config.toml"
+    rel_path = "config/config_3d_IP.toml"
     abs_file_path = os.path.join(script_dir_con, rel_path)
     files = os.listdir(script_dir_con)
     print("**")

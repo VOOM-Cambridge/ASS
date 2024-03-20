@@ -20,6 +20,8 @@ first_check = 300                                                      #hours
 address = "3D Printing Lab, Insitute for manufacturing, Cambridge, UK"
 email = "sjb351@cam.ac.uk"
 process = ["3D Printing"]
+Make_AAS_from = "AASX"
+template_name = "Submodels_SR3.json"
 
 [energy_use]
 name = "energy use"
