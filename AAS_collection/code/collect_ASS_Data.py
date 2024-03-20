@@ -325,7 +325,7 @@ def make_parent_AAS(BOM, parent, config,  script_dir):
         dic = {}
         dic["name"] = parent
         dic["item"] = itemName
-        dic["quantity"] = quantity
+        dic["quantity"] = quantity[0]
         dic["start time"] = ""
         dic["end time"] = ""
         dic["job duration"] = ""
@@ -438,15 +438,15 @@ def findOrderInfo(barcode):
             quantity = dataBack["quantity"]
         return itemName, quantity
         # no order data from frepple try to find item informaiton based on file
-    dataBack = frepple.itemsFunc("GETALL", {"decritpion": str(barcode)})
-    if len(dataBack) !=0:
-        if type(dataBack) == list:
-            itemName = dataBack[0]["item"]
-            quantity = dataBack[0]["quantity"]
-        else:
-            itemName = dataBack["item"]
-            quantity = dataBack["quantity"]
-        return itemName, quantity
+    # dataBack = frepple.itemsFunc("GETALL", {"decritpion": str(barcode)})
+    # if len(dataBack) !=0:
+    #     if type(dataBack) == list:
+    #         itemName = dataBack[0]["item"]
+    #         quantity = dataBack[0]["quantity"]
+    #     else:
+    #         itemName = dataBack["item"]
+    #         quantity = dataBack["quantity"]
+    #     return itemName, quantity
     itemName = ""
     quantity = 1
     

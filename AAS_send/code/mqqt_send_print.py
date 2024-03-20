@@ -80,7 +80,10 @@ class MQTT_forwarding_print(multiprocessing.Process):
         while run:
             while self.zmq_in.poll(500, zmq.POLLIN):
                 msg = self.zmq_in.recv()
-                msg_json = json.loads(msg)
+                if type(msg)== str:
+                    msg_json = json.loads(msg)
+                else:
+                    msg_json = msg
                 print("MQTT_processing: mess recieved to process")
                 msg_send = self.messeage_for_label(msg_json, self.config_lab)
                 topic = self.topic + self.name + "/"
