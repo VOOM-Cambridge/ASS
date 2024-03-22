@@ -1,26 +1,25 @@
-# config file for 3D printing lab
 
 [influx_info]
-url = "timeseries-db.docker.local:8086"
-org = "Robot_Lab"
-token = "robot-lab-2023"
-frequency_record_seconds = 1
+url = "http://129.169.48.175:8086"
+org = "Design-studio"
+token = "design-studio-lab"
+frequency_record_seconds = 5
 
 [frepple_info]
-URL = "http://frepple-3d:80"
+URL = "http://129.169.48.175:9000"
 password = "admin"
 user = "admin"
 
 [Factory]
-idShort = "3D_Printing"
-name = "3D Printing"                                                   #""
-machine = ["Printer_1", "Printer_2", "Printer_3", "Printer_4"]
+idShort = "Design_Studio_Facotry"
+name = "Design Studio Facotry"                                       #"3D Printing"
+machine = ["Laser_Cutter"]
 frequencyUpdate = 1
-fileType = ["AAS", "csv"]
-first_check = 300                                                      #hours
-address = "3D Printing Lab, Insitute for manufacturing, Cambridge, UK"
+fileType = "AAS"
+first_check = 6500                                                   #hours
+address = "Design Studio, Insitute for manufacturing, Cambridge, UK"
 email = "sjb351@cam.ac.uk"
-process = ["3D Printing"]
+process = ["Cutting Lids Out"]
 Make_AAS_from = "Data"
 template_name = "Submodels_SR3.json"
 
@@ -28,18 +27,11 @@ template_name = "Submodels_SR3.json"
 [energy_use]
 idShort = "energy_use"
 name = "energy use"
-frequency = "per product"                                           # per product, per order, per second
-units = "kWh"                                                       #Units of the data, no impact on colelction
-method = "signal"                                                   # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
-machine_list = ["Printer_1", "Printer_2", "Printer_3", "Printer_4"]
+frequency = "per product"       # per product, per order, per second
+units = "kWh"                   #Units of the data, no impact on colelction
+method = "tracking"             # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine_list = ["Laser_Cutter"]
 
-[material_waste]
-idShort = "material_waste"
-name = "material waste"
-frequency = "per product"  # per product, per order, per second
-units = "kg"               #Units of the data, no impact on colelction
-method = "signal"          # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
-source = "sensors"         # can be MES, sensors, sensor-MES, 
 
 [material_use]
 idShort = "material_use"
@@ -60,7 +52,9 @@ idShort = "order_time_taken"
 name = "order time taken"
 frequency = "per order"      # per product, per order, per second
 method = "tracking"          # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
-
+machine = ["Laser_Cutter"]
+start_location = "Job Start"
+end_location = "Job End"
 # [assembly_method]
 # name = "assembly method"
 # frequency= "per order" # per product, per order, per second

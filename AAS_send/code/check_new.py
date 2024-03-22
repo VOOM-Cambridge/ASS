@@ -39,7 +39,7 @@ class Check_for_new(multiprocessing.Process):
                 # Print the new file
                 print("New AAS detected:", file_name)
                 # send files on to next
-                with open(file_path, 'r') as json_file:
+                with open(file_path, encoding="utf-8") as json_file:
                     json_data = json.load(json_file)
                 #msg_payload = json.dumps(json_data)
                 self.zmq_out.send_json(json_data)

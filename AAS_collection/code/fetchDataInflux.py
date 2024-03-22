@@ -435,6 +435,7 @@ class fetchData(influxUploadData):
         query = 'from(bucket: "tracking_data")\
                         |> range(start: -' + timesBack + ')\
                         |> filter(fn: (r) => r["_measurement"] == "tracking")\
+                        |> filter(fn: (r) => r["location"] == "'+ locationE +'")\
                         |> filter(fn: (r) => r["_field"] == "id")\
                         |> unique()'
         table = query_api.query(query)    

@@ -4,7 +4,7 @@
 url = "http://129.169.48.173:8086"
 org = "Robot_Lab"
 token = "robot-lab-2023"
-frequency_record_seconds = 1
+frequency_record_seconds = 5
 
 [frepple_info]
 URL = "http://129.169.48.173:9000"
