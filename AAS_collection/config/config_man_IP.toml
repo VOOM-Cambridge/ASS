@@ -2,7 +2,7 @@
 url = "http://129.169.48.174:8086"
 org = "VOOM_MANUAL"
 token = "l3Z9k31lKzZ-Ixupk_s3FjinRas-HHbvf7tsBTpEUCP7m5YQL0Z0jF1yjQEC_ZNYLEr6xkSZfuXMUP_spHe9cg=="
-frequency_record_seconds = 5
+frequency_record_seconds = 2
 
 [frepple_info]
 URL = "http://129.169.48.174:80"

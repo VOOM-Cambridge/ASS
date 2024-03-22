@@ -7,28 +7,28 @@ token = "robot-lab-2023"
 frequency_record_seconds = 2
 
 [frepple_info]
-URL = "http://129.169.48.173:9000"
+URL = ""
 password = "admin"
 user = "admin"
 
 [Factory]
 name = "3D Printing"                                                   #""
-machine = ["Printer_1", "Printer_2", "Printer_3", "Printer_4"]
+machine = [""]
 frequencyUpdate = 1
 fileType = "AAS"                                                       #["AAS", "csv"]
 first_check = 300                                                      #hours
 address = "3D Printing Lab, Insitute for manufacturing, Cambridge, UK"
 email = "sjb351@cam.ac.uk"
 process = ["3D Printing"]
-Make_AAS_from = "Data"
-template_name = "Submodels_SR3.json"
+Make_AAS_from = "File"
+template_name = "Submodels_Screw.json"
 
 [energy_use]
 name = "energy use"
-frequency = "per product"                 # per product, per order, per second
-units = "kWh"                             #Units of the data, no impact on colelction
-method = "signal"                         # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
-machine_list = ["Printer_1", "Printer_2"]
+frequency = "per product" # per product, per order, per second
+units = "kWh"             #Units of the data, no impact on colelction
+method = "signal"         # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+machine_list = [""]
 
 [material_waste]
 name = "material waste"

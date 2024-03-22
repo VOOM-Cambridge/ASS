@@ -7,9 +7,9 @@
         "hasDataSpecification": [],
         "identification": {
             "idType": "IRI",
-            "id": "urn:cam.ac.uk:ifm:sub:1:1Design_Studio_Facotry:DSTLV10007"
+            "id": "urn:cam.ac.uk:ifm:sub:1:1:pla3D_Printing:3DBGV20001"
         },
-        "idShort": "DSTLV10007",
+        "idShort": "X3DBGV20001",
         "modelType": {
             "name": "Submodel"
         },
@@ -38,7 +38,7 @@
                 },
                 "value": [
                     {
-                        "value": "['']",
+                        "value": "",
                         "semanticId": {
                             "keys": [
                                 {
@@ -60,7 +60,7 @@
                         "kind": "Instance"
                     },
                     {
-                        "value": "1.0",
+                        "value": "1",
                         "semanticId": {
                             "keys": [
                                 {
@@ -88,7 +88,7 @@
                         ]
                     },
                     {
-                        "value": "DSTLV10007",
+                        "value": "3DBGV20001",
                         "semanticId": {
                             "keys": [
                                 {
@@ -141,7 +141,7 @@
                 },
                 "value": [
                     {
-                        "value": "Design Studio Facotry",
+                        "value": "3D Printing",
                         "semanticId": {
                             "keys": [
                                 {
@@ -185,7 +185,7 @@
                         "kind": "Instance"
                     },
                     {
-                        "value": "Design Studio, Insitute for manufacturing, Cambridge, UK",
+                        "value": "3D Printing Lab, Insitute for manufacturing, Cambridge, UK",
                         "semanticId": {
                             "keys": [
                                 {
@@ -232,7 +232,7 @@
                 "kind": "Template"
             },
             {
-                "value": "0.0",
+                "value": "1.53145971150908",
                 "semanticId": {
                     "keys": [
                         {
@@ -287,39 +287,13 @@
                         "semanticId": {
                             "keys": []
                         },
-                        "idShort": "Aluminium",
+                        "idShort": "ABS_material_roll",
                         "modelType": {
                             "name": "SubmodelElementCollection"
                         },
                         "value": [
                             {
-                                "value": "4521.0",
-                                "semanticId": {
-                                    "keys": []
-                                },
-                                "idShort": "quantity_used",
-                                "modelType": {
-                                    "name": "Property"
-                                },
-                                "valueType": "string",
-                                "kind": "Instance"
-                            }
-                        ],
-                        "kind": "Instance"
-                    },
-                    {
-                        "ordered": false,
-                        "allowDuplicates": false,
-                        "semanticId": {
-                            "keys": []
-                        },
-                        "idShort": "Aluminium",
-                        "modelType": {
-                            "name": "SubmodelElementCollection"
-                        },
-                        "value": [
-                            {
-                                "value": "4521.0",
+                                "value": "-0.0060913125",
                                 "semanticId": {
                                     "keys": []
                                 },
@@ -359,7 +333,7 @@
                 },
                 "value": [
                     {
-                        "value": "Cutting Lids Out",
+                        "value": "3D Printing",
                         "semanticId": {
                             "keys": [
                                 {

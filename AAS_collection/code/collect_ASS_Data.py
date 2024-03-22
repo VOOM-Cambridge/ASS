@@ -17,7 +17,7 @@ class AAS_Collector:
     def __init__(self):
         
         script_dir_con = os.path.dirname(__file__) #<-- absolute dir the script is in
-        self.config_rel_path = "config/config_man_IP.toml"
+        self.config_rel_path = "config/config_DS_IP.toml"
         abs_file_path = os.path.join(script_dir_con, self.config_rel_path)
         files = os.listdir(script_dir_con)
         with open(abs_file_path, mode="rb") as fp:
@@ -428,7 +428,7 @@ class AAS_Collector:
 
     def add_to_aas(self, dict_file_in, typeIn):
         # open json file of aas template
-        rel_path = "AAS_data/templates/Submodel_SR3.json"
+        rel_path = "AAS_data/templates/Submodel_PL1.json"
         abs_file_path = os.path.join(self.script_dir, rel_path)
         with open(abs_file_path) as json_file:
             data_example = json.load(json_file)

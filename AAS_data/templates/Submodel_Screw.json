@@ -7,9 +7,9 @@
     "hasDataSpecification": [],
     "identification": {
       "idType": "IRI",
-      "id": "urn:cam.ac.uk:ifm:sub:1:1:plasticlid"
+      "id": "urn:cam.ac.uk:ifm:sub:1:1:screws"
     },
-    "idShort": "PL1",
+    "idShort": "Screw",
     "modelType": {
       "name": "Submodel"
     },
@@ -60,7 +60,7 @@
             "kind": "Instance"
           },
           {
-            "value": "6.00000000",
+            "value": "100",
             "semanticId": {
               "keys": [
                 {
@@ -88,7 +88,7 @@
             ]
           },
           {
-            "value": "Gears_V2_pair.gcode",
+            "value": "order_number",
             "semanticId": {
               "keys": [
                 {
@@ -141,7 +141,7 @@
         },
         "value": [
           {
-            "value": "3D Printing",
+            "value": "Screw distributer",
             "semanticId": {
               "keys": [
                 {
@@ -163,7 +163,7 @@
             "kind": "Instance"
           },
           {
-            "value": "Gearcomp.",
+            "value": "screwcomp.",
             "semanticId": {
               "keys": [
                 {
@@ -185,7 +185,7 @@
             "kind": "Instance"
           },
           {
-            "value": "3D Printing Lab, Insitute for manufacturing, Cambridge, UK",
+            "value": "Screw Warehouse, Insitute for manufacturing, Cambridge, UK",
             "semanticId": {
               "keys": [
                 {
@@ -232,7 +232,7 @@
         "kind": "Template"
       },
       {
-        "value": "3.782508649733194",
+        "value": "0",
         "semanticId": {
           "keys": [
             {
@@ -287,13 +287,13 @@
             "semanticId": {
               "keys": []
             },
-            "idShort": "Plastic",
+            "idShort": "Steel",
             "modelType": {
               "name": "SubmodelElementCollection"
             },
             "value": [
               {
-                "value": "0.23654",
+                "value": "0.188",
                 "semanticId": {
                   "keys": []
                 },
@@ -333,7 +333,7 @@
         },
         "value": [
           {
-            "value": "3D Printing",
+            "value": "Warehouse",
             "semanticId": {
               "keys": [
                 {
@@ -347,29 +347,7 @@
             },
             "constraints": [],
             "hasDataSpecification": [],
-            "idShort": "Process_000",
-            "modelType": {
-              "name": "Property"
-            },
-            "valueType": "string",
-            "kind": "Instance"
-          },
-          {
-            "value": "3D Printing",
-            "semanticId": {
-              "keys": [
-                {
-                  "type": "GlobalReference",
-                  "local": false,
-                  "value": "",
-                  "index": 0,
-                  "idType": "IRI"
-                }
-              ]
-            },
-            "constraints": [],
-            "hasDataSpecification": [],
-            "idShort": "Process_0",
+            "idShort": "process_warehouse_1",
             "modelType": {
               "name": "Property"
             },

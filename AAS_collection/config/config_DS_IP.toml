@@ -3,7 +3,7 @@
 url = "http://129.169.48.175:8086"
 org = "Design-studio"
 token = "design-studio-lab"
-frequency_record_seconds = 5
+frequency_record_seconds = 2
 
 [frepple_info]
 URL = "http://129.169.48.175:9000"

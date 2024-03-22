@@ -7,9 +7,9 @@
         "hasDataSpecification": [],
         "identification": {
             "idType": "IRI",
-            "id": "urn:cam.ac.uk:ifm:sub:1:1:plaDesign_Studio_Facotry:DSTLOR0001"
+            "id": "urn:cam.ac.uk:ifm:sub:1:1:plaDesign_Studio_Facotry:DSTLOR0012"
         },
-        "idShort": "DSTLOR0001",
+        "idShort": "DSTLOR0012",
         "modelType": {
             "name": "Submodel"
         },
@@ -38,7 +38,7 @@
                 },
                 "value": [
                     {
-                        "value": "",
+                        "value": "['']",
                         "semanticId": {
                             "keys": [
                                 {
@@ -60,7 +60,7 @@
                         "kind": "Instance"
                     },
                     {
-                        "value": "1",
+                        "value": "4",
                         "semanticId": {
                             "keys": [
                                 {
@@ -88,7 +88,7 @@
                         ]
                     },
                     {
-                        "value": "DSTLOR0001",
+                        "value": "DSTLV10007",
                         "semanticId": {
                             "keys": [
                                 {
@@ -232,7 +232,7 @@
                 "kind": "Template"
             },
             {
-                "value": "0.08320883212933619",
+                "value": "0.0",
                 "semanticId": {
                     "keys": [
                         {

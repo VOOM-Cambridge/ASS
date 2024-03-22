@@ -41,7 +41,7 @@ influxClient = fetchData(configInflux)
 
 # #sTime, eTime = influxClient.jobLengthTime("", 200)
 # data = influxClient.jobFindChildren("3DOR1000", 100)
-data = influxClient.jobFindBOM('3DOR1000', 100)
+data = influxClient.jobFindBOM('DSTLV10007', 100)
 
 # #data = influxClient.findClosestBarcode(endTime, "3DP100400")
 print(data)

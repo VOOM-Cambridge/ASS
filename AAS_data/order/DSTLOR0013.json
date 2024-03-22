@@ -7,9 +7,9 @@
         "hasDataSpecification": [],
         "identification": {
             "idType": "IRI",
-            "id": "urn:cam.ac.uk:ifm:sub:1:1Design_Studio_Facotry:DSTLV10006"
+            "id": "urn:cam.ac.uk:ifm:sub:1:1:plaDesign_Studio_Facotry:DSTLOR0013"
         },
-        "idShort": "DSTLV10006",
+        "idShort": "DSTLOR0013",
         "modelType": {
             "name": "Submodel"
         },
@@ -60,7 +60,7 @@
                         "kind": "Instance"
                     },
                     {
-                        "value": 2,
+                        "value": "4",
                         "semanticId": {
                             "keys": [
                                 {
@@ -88,7 +88,7 @@
                         ]
                     },
                     {
-                        "value": "DSTLV10006",
+                        "value": "DSTLOR0001",
                         "semanticId": {
                             "keys": [
                                 {
@@ -232,7 +232,7 @@
                 "kind": "Template"
             },
             {
-                "value": "0.0",
+                "value": "0.08320883212933619",
                 "semanticId": {
                     "keys": [
                         {
@@ -294,32 +294,6 @@
                         "value": [
                             {
                                 "value": "0.23654",
-                                "semanticId": {
-                                    "keys": []
-                                },
-                                "idShort": "quantity_used",
-                                "modelType": {
-                                    "name": "Property"
-                                },
-                                "valueType": "string",
-                                "kind": "Instance"
-                            }
-                        ],
-                        "kind": "Instance"
-                    },
-                    {
-                        "ordered": false,
-                        "allowDuplicates": false,
-                        "semanticId": {
-                            "keys": []
-                        },
-                        "idShort": "Aluminium",
-                        "modelType": {
-                            "name": "SubmodelElementCollection"
-                        },
-                        "value": [
-                            {
-                                "value": "4521",
                                 "semanticId": {
                                     "keys": []
                                 },

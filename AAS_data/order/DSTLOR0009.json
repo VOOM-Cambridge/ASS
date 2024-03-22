@@ -7,9 +7,9 @@
         "hasDataSpecification": [],
         "identification": {
             "idType": "IRI",
-            "id": "urn:cam.ac.uk:ifm:sub:1:1:plaDesign_Studio_Facotry:DSTLOR0001"
+            "id": "urn:cam.ac.uk:ifm:sub:1:1:plaDesign_Studio_Facotry:DSTLOR0009"
         },
-        "idShort": "DSTLOR0001",
+        "idShort": "DSTLOR0010",
         "modelType": {
             "name": "Submodel"
         },
@@ -60,7 +60,7 @@
                         "kind": "Instance"
                     },
                     {
-                        "value": "1",
+                        "value": "4",
                         "semanticId": {
                             "keys": [
                                 {
