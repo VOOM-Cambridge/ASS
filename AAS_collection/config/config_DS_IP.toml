@@ -20,7 +20,7 @@ first_check = 6500                                                   #hours
 address = "Design Studio, Insitute for manufacturing, Cambridge, UK"
 email = "sjb351@cam.ac.uk"
 process = ["Cutting Lids Out"]
-Make_AAS_from = "Data"
+Make_AAS_from = "File"
 template_name = "Submodels_SR3.json"
 
 

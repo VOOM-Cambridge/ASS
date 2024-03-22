@@ -89,7 +89,7 @@ class MQTT_forwarding(multiprocessing.Process):
                 data = [topic, msg_send]
                 logger.info(data)
                 try:
-                    data = data.decode()
+                    msg_send = msg_send.decode()
                 except (UnicodeDecodeError, AttributeError):
                     pass
                 out = json.dumps(msg_send)
