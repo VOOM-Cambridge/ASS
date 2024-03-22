@@ -39,15 +39,18 @@ class Check_for_new(multiprocessing.Process):
                 # Print the new file
                 print("New AAS detected:", file_name)
                 # send files on to next
-                with open(file_path, encoding="utf-8") as json_file:
-                    json_data = json.load(json_file)
-                #msg_payload = json.dumps(json_data)
-                self.zmq_out.send_json(json_data)
-                # Add the file to the set of printed files
-                self.printed_files.add(file_name)
-                # Append the file name to the sent_files_file
-                with open(self.sent_files_file, 'a') as file:
-                    file.write(file_name + '\n')
+                try:
+                    with open(file_path, encoding="utf-8") as json_file:
+                        json_data = json.load(json_file)
+                    #msg_payload = json.dumps(json_data)
+                    self.zmq_out.send_json(json_data)
+                    # Add the file to the set of printed files
+                    self.printed_files.add(file_name)
+                    # Append the file name to the sent_files_file
+                    with open(self.sent_files_file, 'a') as file:
+                        file.write(file_name + '\n')
+                except:
+                    print("couldn't find file in orders",file_name)
         
     def run(self):
         self.do_connect()
