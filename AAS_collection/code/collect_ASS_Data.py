@@ -289,13 +289,13 @@ class AAS_Collector:
         if data != None:
             data[0]["idShort"] = self.checkId(barcodeParent)
             data[0]["identification"]["id"] = data[0]["identification"]["id"][:-4] + data[0]["idShort"]
-
+            dataout = json.dumps(data)
             directory_path  = "AAS_data/order/" 
-            rel_path = directory_path + barcodeParent.replace(".", "_").replace(" ", "_") + ".json"
+            rel_path = directory_path + barcodeParent + ".json"
             abs_file_path = os.path.join(self.script_dir, rel_path)
             
             with open(abs_file_path, "w") as outfile:   
-                outfile.write(data)
+                outfile.write(dataout)
                 return 0
 
     def make_parent_AAS(self, BOM, parent):
