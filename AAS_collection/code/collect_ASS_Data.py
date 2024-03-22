@@ -288,21 +288,12 @@ class AAS_Collector:
         
         if data != None:
             data[0]["idShort"] = self.checkId(barcodeParent)
+            data[0]["identification"]["id"] = data[0]["identification"]["id"][:-4] + data[0]["idShort"]
 
             directory_path  = "AAS_data/order/" 
             rel_path = directory_path + barcodeParent.replace(".", "_").replace(" ", "_") + ".json"
             abs_file_path = os.path.join(self.script_dir, rel_path)
-            i = 1
-            while os.path.isfile(abs_file_path) and os.access(abs_file_path, os.R_OK):
-                with open(abs_file_path, "r") as outfile:
-                    dataIn = json.load(outfile)
-                    if data == dataIn: 
-                        #print("Data already added")
-                        return 1
-                rel_path = directory_path  + barcodeParent.replace(".", "_").replace(" ", "_") + str(i) + ".json"
-                abs_file_path = os.path.join(self.script_dir, rel_path)
-                i = i+ 1 
-
+            
             with open(abs_file_path, "w") as outfile:   
                 outfile.write(data)
                 return 0
