@@ -279,7 +279,7 @@ class AAS_Collector:
     def make_AAS_file(self, barcodeParent):
         new_path = "AAS_data/template/" 
         rel_path = os.path.join(self.script_dir, new_path)
-        data = self.findAASFromDirec(rel_path, self.config["template_name"])
+        data = self.findAASFromDirec(rel_path, self.config["Factory"]["template_name"])
 
         data[0]["idShort"] = self.checkId(barcodeParent)
 
