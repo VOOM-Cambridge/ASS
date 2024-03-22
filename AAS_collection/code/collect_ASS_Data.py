@@ -277,29 +277,34 @@ class AAS_Collector:
             return None
 
     def make_AAS_file(self, barcodeParent):
-        new_path = "AAS_data/template/" 
+        new_path = "AAS_data/product/" 
         rel_path = os.path.join(self.script_dir, new_path)
         data = self.findAASFromDirec(rel_path, self.config["Factory"]["template_name"])
+        if data == None:
+            new_path = "AAS_data/templates/" 
+            rel_path = os.path.join(self.script_dir, new_path)
+            data = self.findAASFromDirec(rel_path, self.config["Factory"]["template_name"])
+        
+        if data != None:
+            data[0]["idShort"] = self.checkId(barcodeParent)
 
-        data[0]["idShort"] = self.checkId(barcodeParent)
-
-        directory_path  = "AAS_data/order/" 
-        rel_path = directory_path + barcodeParent.replace(".", "_").replace(" ", "_") + ".json"
-        abs_file_path = os.path.join(self.script_dir, rel_path)
-        i = 1
-        while os.path.isfile(abs_file_path) and os.access(abs_file_path, os.R_OK):
-            with open(abs_file_path, "r") as outfile:
-                dataIn = json.load(outfile)
-                if data == dataIn: 
-                    #print("Data already added")
-                    return 1
-            rel_path = directory_path  + barcodeParent.replace(".", "_").replace(" ", "_") + str(i) + ".json"
+            directory_path  = "AAS_data/order/" 
+            rel_path = directory_path + barcodeParent.replace(".", "_").replace(" ", "_") + ".json"
             abs_file_path = os.path.join(self.script_dir, rel_path)
-            i = i+ 1 
+            i = 1
+            while os.path.isfile(abs_file_path) and os.access(abs_file_path, os.R_OK):
+                with open(abs_file_path, "r") as outfile:
+                    dataIn = json.load(outfile)
+                    if data == dataIn: 
+                        #print("Data already added")
+                        return 1
+                rel_path = directory_path  + barcodeParent.replace(".", "_").replace(" ", "_") + str(i) + ".json"
+                abs_file_path = os.path.join(self.script_dir, rel_path)
+                i = i+ 1 
 
-        with open(abs_file_path, "w") as outfile:   
-            outfile.write(data)
-            return 0
+            with open(abs_file_path, "w") as outfile:   
+                outfile.write(data)
+                return 0
 
     def make_parent_AAS(self, BOM, parent):
         totalEnergy = 0
