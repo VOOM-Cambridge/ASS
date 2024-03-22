@@ -279,8 +279,8 @@ class AAS_Collector:
     def make_AAS_file(self, barcodeParent):
         new_path = "AAS_data/product/" 
         rel_path = os.path.join(self.script_dir, new_path)
-        barcodeParent = barcodeParent +".json"
-        data = self.findAASFromDirec(rel_path, barcodeParent)
+        barcodeParentnew = barcodeParent +".json"
+        data = self.findAASFromDirec(rel_path, barcodeParentnew)
         if data == None:
             new_path = "AAS_data/templates/" 
             rel_path = os.path.join(self.script_dir, new_path)
