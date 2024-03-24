@@ -5,7 +5,9 @@ services:
     build: .
     privileged: true
     volumes:
-      - /etc/localtime:/etc/localtime:ro
+      #- /etc/localtime:/etc/localtime:ro
       - ./data:/app/data
-    devices:
-      - /dev/input:/dev/input:ro
+    ports:
+      - "5000:5000"
+    # devices:
+    #   - /dev/input:/dev/input:ro

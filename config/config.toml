@@ -11,8 +11,8 @@ file_directory_out = "AAS_data/order/"
 # Design Studio: 129.169.48.175
 
 [external_layer.mqtt]
-broker = "mqtt.docker.local"
-broker_send = "129.169.48.174"
+broker = "129.169.48.173"      #"mqtt.docker.local"
+broker_send = "129.169.48.173"
 
 port = 1883
 base_topic_template = ""
@@ -27,11 +27,11 @@ serial = "0581_011c"
 connection_point = ["0", "1", "1.0"]
 
 [internal_layer.mqtt]
-broker = "mqtt.docker.local"
+broker = "129.169.48.173"  #"mqtt.docker.local"
 port = 1883
 base_topic_template = ""
 topic = "AAS/send/in/#"
-topic_print = "print/"
+topic_print = "AAS/print/"
 
 reconnect.initial = 5 # seconds
 reconnect.backoff = 2 # multiplier

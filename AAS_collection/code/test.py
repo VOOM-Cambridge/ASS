@@ -20,7 +20,7 @@ script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
 
 
-rel_path = "/config/config_3d_IP.toml"
+rel_path = "/config/config_DS_IP.toml"
 abs_file_path = script_dir + rel_path
 with open(abs_file_path, mode="rb") as fp:
     config = tomli.load(fp)
@@ -41,10 +41,28 @@ influxClient = fetchData(configInflux)
 
 # #sTime, eTime = influxClient.jobLengthTime("", 200)
 # data = influxClient.jobFindChildren("3DOR1000", 100)
-data = influxClient.jobFindBOM('DSTLV10007', 100)
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
+
+def clear_bucket_data(bucket_name):
+    # Initialize InfluxDB client
+    client = InfluxDBClient(url=configInflux["url"], token=configInflux["token"], org=configInflux["org"])
+
+    # Get delete API
+    delete_api = client.delete_api()
+
+    # Delete all data from the bucket
+    delete_api.delete(start="1970-01-01T00:00:00Z", stop="2100-01-01T00:00:00Z", predicate='', bucket=bucket_name)
+
+    print(f"All data deleted from the '{bucket_name}' bucket.")
+
+# Example usage:
+bucket_name = "your_bucket_name"
+clear_bucket_data("tracking_data")
+
 
 # #data = influxClient.findClosestBarcode(endTime, "3DP100400")
-print(data)
+
 
 # for dat in data:
 #     print(influxClient.jobFindChildren(dat, 100))

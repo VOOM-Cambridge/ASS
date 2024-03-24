@@ -610,6 +610,7 @@ class AAS_Collector:
         script_dir =  self.findCurrentStore()
         timeSinceLast_string = str(round(self.timeSinceLast)) + "s"
         ordersCompleated = self.influxClient.findJobsAtLocation(locationOut, timeSinceLast_string)
+        print(ordersCompleated)
         if ordersCompleated: # orderscompleated is not null
             for order in ordersCompleated:
                 # check if AAS already exisits 
@@ -622,11 +623,11 @@ class AAS_Collector:
                 if not self.file_exists(rel_path, filename):
                     # find all children asociated with the ASS 
                     BOM = self.influxClient.jobFindChildren(order[0], 300)
+                    if self.config["Factory"]["Make_AAS_from"] == "File":
+                        self.make_AAS_file(order[0])
                     print(BOM)
                     if len(BOM) > 0:
                         # create an order AAS 
-                        if self.config["Factory"]["Make_AAS_from"] == "File":
-                            self.make_AAS_file(order[0])
                         if self.config["Factory"]["Make_AAS_from"] == "AASX":
                             self.make_AASX(order[0])
                         else: # make from data

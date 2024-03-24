@@ -1,17 +1,17 @@
 version: "2"
 
 services:
-    create_aas:
-        extends:
-            file: AAS_collection/app.yml
-            service: app
-        volumes:
-            - ./AAS_data:/app/AAS_data
-        networks:
-            internal:
-                aliases:
-                    - collection.docker.local
-        restart: unless-stopped
+    # create_aas:
+    #     extends:
+    #         file: AAS_collection/app.yml
+    #         service: app
+    #     volumes:
+    #         - ./AAS_data:/app/AAS_data
+    #     networks:
+    #         internal:
+    #             aliases:
+    #                 - collection.docker.local
+    #     restart: unless-stopped
     # read_aas:
     #     extends:
     #         file: AAS_Read_MQTT/app.yml
@@ -38,5 +38,5 @@ services:
         restart: unless-stopped
 networks:
     internal:
-        name: 3DPrinting # voom-network
+        name: shoestring-internal-2
         external: true

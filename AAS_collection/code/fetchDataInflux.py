@@ -180,6 +180,13 @@ class fetchData(influxUploadData):
         out = [x[0] for x in output]
         return out
     
+    def deleteTracking(self):
+        # Get delete API
+        delete_api = self.influx_client.delete_api()
+        # Delete all data from the bucket
+        delete_api.delete(start="1970-01-01T00:00:00Z", stop="2100-01-01T00:00:00Z", predicate='_measurement=="anything"', bucket="Tracking")
+
+    
     def jobFindBOM(self, barcode, numberDaysBack):
         query_api = self.influx_client.query_api()
         if barcode == None:

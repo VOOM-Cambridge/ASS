@@ -83,7 +83,7 @@ class MQTT_forwarding(multiprocessing.Process):
                     msg_json = json.loads(msg)
                 else:
                     msg_json = msg
-                print("MQTT_processing: mess recieved to process")
+                logger.info("MQTT_processing: mess recieved to process")
                 msg_send = self.messeage_process(msg_json)
                 topic = self.topic + self.name + "/"
                 data = [topic, msg_send]

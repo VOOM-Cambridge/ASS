@@ -80,15 +80,21 @@ class MQTT_forwarding_print(multiprocessing.Process):
         while run:
             while self.zmq_in.poll(500, zmq.POLLIN):
                 msg = self.zmq_in.recv()
+                try: 
+                    msg = msg.decode("utf-8")
+                except:
+                    msg =msg
+                
                 if type(msg)== str:
                     msg_json = json.loads(msg)
                 else:
                     msg_json = msg
                 print("MQTT_processing: mess recieved to process")
+                print(type(msg_json))
                 msg_send = self.messeage_for_label(msg_json, self.config_lab)
                 topic = self.topic + self.name + "/"
                 #data = [topic, msg_send]
-                logger.info("AAS sending with topic: ", topic)
+                logger.info("AAS sending with topic: " + topic)
                 out = json.dumps(msg_send)
                 client.publish(topic, out)
                 logger.info("Sent")
@@ -119,8 +125,8 @@ class MQTT_forwarding_print(multiprocessing.Process):
         return payload
     
     def findName(self, msg_in):
-        if msg_in["idShort"]:
-            name = msg_in["idShort"]
+        if msg_in[0]["idShort"]:
+            name = msg_in[0]["idShort"]
         elif msg_in[0]["submodelElements"][0]["value"][2]["value"]:
             name = msg_in[0]["submodelElements"][0]["value"][2]["value"]
         else:

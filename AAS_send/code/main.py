@@ -14,7 +14,7 @@ import zmq
 from mqqt_send import MQTT_forwarding
 from mqqt_send_print import MQTT_forwarding_print
 from check_new import Check_for_new
-
+from userInterface import App
 logger = logging.getLogger("main")
 logging.basicConfig(level=logging.DEBUG)  # move to log config file using python functionality
 
@@ -32,21 +32,21 @@ def config_valid(config):
 def create_building_blocks(config):
     bbs = {}
 
+    interface = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4051", "bind": True}
+    print_pair = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
+    
     check_Out = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
     print_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
     mqtt_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
-
-    bbs["check"] = Check_for_new(config, {"out":check_Out})
-
+    
+    #bbs["check"] = Check_for_new(config, {"out":check_Out})
+    
     if config["Factory"]["sending_method"] == "Printing":
         bbs["out"] = MQTT_forwarding_print(config, {"in": print_in})
     elif config["Factory"]["sending_method"] == "MQTT":
         bbs["out"] = MQTT_forwarding(config, {"in": mqtt_in})
-    # else: #"Final_AAS"
-    #     bbs["out"] = makeSubmodels(config, mqtt_in)
 
-
-    
+    bbs["ui"] = App(config, {"out": interface})
     return bbs
 
 

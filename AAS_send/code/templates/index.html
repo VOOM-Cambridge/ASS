@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Selector</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      select,
+      button[type="submit"] {
+        margin-top: 10px;
+        padding: 8px 12px;
+        font-size: 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      select {
+        background-color: #fff;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Select an Order to print</h1>
+      <form method="post" action="/">
+        <select name="file">
+          {% for file in files %}
+          <option value="{{ file }}">{{ file }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Print</button>
+      </form>
+      <div class="container">
+        <p>{{text}}</p>
+      </div>
+    </div>
+  </body>
+</html>
