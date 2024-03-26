@@ -50,7 +50,7 @@ class App:
             return jsonify({'message': 'Stop command sent'})
 
     def start(self):
-        self.app.run(debug=True,host="0.0.0.0",port=6000)
+        self.app.run(debug=True,host="0.0.0.0",port=6050)
     
     def connect(self):
         self.zmq_out = context.socket(self.zmq_conf['out']['type'])
@@ -94,7 +94,7 @@ class App:
         # send files on to next
         with open(file_path, encoding="utf-8") as json_file:
             json_data = json.load(json_file)
-            #logging.info(json_data)
+            logging.info(json_file)
         #msg_payload = json.dumps(json_data)
         self.zmq_out.send_json(json_data)
         print("sent")

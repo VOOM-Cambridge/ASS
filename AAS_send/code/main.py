@@ -36,8 +36,8 @@ def create_building_blocks(config):
     print_pair = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
     
     check_Out = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
-    print_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
-    mqtt_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4000", "bind": False}
+    print_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
+    mqtt_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
     
     #bbs["check"] = Check_for_new(config, {"out":check_Out})
     

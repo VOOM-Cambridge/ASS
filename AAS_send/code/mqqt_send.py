@@ -79,6 +79,12 @@ class MQTT_forwarding(multiprocessing.Process):
         while run:
             while self.zmq_in.poll(500, zmq.POLLIN):
                 msg = self.zmq_in.recv()
+                logger.info("mess recived")
+                try: 
+                    msg = msg.decode("utf-8")
+                except:
+                    msg =msg
+                    
                 if type(msg)== str:
                     msg_json = json.loads(msg)
                 else:

@@ -8,6 +8,6 @@ services:
       #- /etc/localtime:/etc/localtime:ro
       - ./data:/app/data
     ports:
-      - "5000:5000"
+      - "6050:6050"
     # devices:
     #   - /dev/input:/dev/input:ro
