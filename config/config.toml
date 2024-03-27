@@ -1,7 +1,7 @@
 # config file for 3D printing lab
 [Factory]
 name = "3D Printing"
-sending_method = "MQTT" # "Printing" or "MQTT" or "Store"
+sending_method = "Printing" # "Printing" or "MQTT" or "Store"
 # sending method = None means the AASX will be created
 file_directory_out = "AAS_data/order/"
 

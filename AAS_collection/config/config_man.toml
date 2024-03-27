@@ -2,7 +2,7 @@
 url = "timeseries-db.docker.local:8086"
 org = "VOOM_MANUAL"
 token = "l3Z9k31lKzZ-Ixupk_s3FjinRas-HHbvf7tsBTpEUCP7m5YQL0Z0jF1yjQEC_ZNYLEr6xkSZfuXMUP_spHe9cg=="
-frequency_record_seconds = 1
+frequency_record_seconds = 5
 
 [frepple_info]
 URL = "http://frepple-3d:80"
@@ -19,7 +19,7 @@ first_check = 300                                                               
 address = "Manual Assembly, Robot Lab back, Insitute for manufacturing, Cambridge, UK"
 email = "sjb351@cam.ac.uk"
 process = ["manual assembly"]
-Make_AAS_from = "Data"
+Make_AAS_from = "AASX"
 template_name = "Submodels_SR3.json"
 
 
@@ -49,11 +49,11 @@ method = "MES"            # data collected using signal peaks (signals) or track
 [order_time_taken]
 idShort = "order_time_taken"
 name = "order time taken"
-frequency = "per order"       # per product, per order, per second
-method = "tracking"           # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
+frequency = "per order"      # per product, per order, per second
+method = "tracking"          # data collected using signal peaks (signals) or tracking system (tracking), MES or <sensor>-MES combination
 machine = [""]
-start_location = "Location 2"
-end_location = "Location 3"
+start_location = "Job Start"
+end_location = "Job End"
 # [assembly_method]
 # name = "assembly method"
 # frequency= "per order" # per product, per order, per second

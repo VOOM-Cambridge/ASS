@@ -1,0 +1,410 @@
+[
+    {
+        "semanticId": {
+            "keys": []
+        },
+        "qualifiers": [],
+        "hasDataSpecification": [],
+        "identification": {
+            "idType": "IRI",
+            "id": "urn:cam.ac.uk:ifm:sub:1:13D_Printing:split_1_0mm_CCR20PRO_1in-Thread_gcode"
+        },
+        "idShort": "split_1_0mm_CCR20PRO_1in-Thread_gcode",
+        "modelType": {
+            "name": "Submodel"
+        },
+        "kind": "Instance",
+        "submodelElements": [
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "OrderDetails",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "value": "",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "parts",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "1",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "quantityofparts",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance",
+                        "descriptions": [
+                            {
+                                "language": "en",
+                                "text": "quantity of parts in one order"
+                            }
+                        ]
+                    },
+                    {
+                        "value": "split_1_0mm_CCR20PRO_1in-Thread_gcode",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "order_number",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance",
+                        "descriptions": [
+                            {
+                                "language": "en",
+                                "text": "...."
+                            }
+                        ]
+                    }
+                ],
+                "kind": "Template"
+            },
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "SupplierDetails",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "value": "3D Printing",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "Name",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "Gearcomp.",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "id",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "3D Printing Lab, Insitute for manufacturing, Cambridge, UK",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "Address",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "sjb351@cam.ac.uk",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "CompanyContactEmail",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    }
+                ],
+                "kind": "Template"
+            },
+            {
+                "value": "0.5705339199522563",
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "TotalEnergy",
+                "modelType": {
+                    "name": "Property"
+                },
+                "valueType": "string",
+                "kind": "Instance",
+                "descriptions": [
+                    {
+                        "language": "en",
+                        "text": "provide units for the energy"
+                    }
+                ]
+            },
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "TotalMaterial",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "ordered": false,
+                        "allowDuplicates": false,
+                        "semanticId": {
+                            "keys": []
+                        },
+                        "idShort": "ABS_material_roll",
+                        "modelType": {
+                            "name": "SubmodelElementCollection"
+                        },
+                        "value": [
+                            {
+                                "value": "-0.0060913125",
+                                "semanticId": {
+                                    "keys": []
+                                },
+                                "idShort": "quantity_used",
+                                "modelType": {
+                                    "name": "Property"
+                                },
+                                "valueType": "string",
+                                "kind": "Instance"
+                            }
+                        ],
+                        "kind": "Instance"
+                    },
+                    {
+                        "ordered": false,
+                        "allowDuplicates": false,
+                        "semanticId": {
+                            "keys": []
+                        },
+                        "idShort": "Aluminium",
+                        "modelType": {
+                            "name": "SubmodelElementCollection"
+                        },
+                        "value": [
+                            {
+                                "value": "4521",
+                                "semanticId": {
+                                    "keys": []
+                                },
+                                "idShort": "quantity_used",
+                                "modelType": {
+                                    "name": "Property"
+                                },
+                                "valueType": "string",
+                                "kind": "Instance"
+                            }
+                        ],
+                        "kind": "Instance"
+                    }
+                ],
+                "kind": "Template"
+            },
+            {
+                "ordered": true,
+                "allowDuplicates": false,
+                "semanticId": {
+                    "keys": [
+                        {
+                            "type": "GlobalReference",
+                            "local": false,
+                            "value": "",
+                            "index": 0,
+                            "idType": "IRI"
+                        }
+                    ]
+                },
+                "constraints": [],
+                "hasDataSpecification": [],
+                "idShort": "Processes",
+                "category": "PARAMETER",
+                "modelType": {
+                    "name": "SubmodelElementCollection"
+                },
+                "value": [
+                    {
+                        "value": "3D Printing",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "Process_000",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    },
+                    {
+                        "value": "3D Printing",
+                        "semanticId": {
+                            "keys": [
+                                {
+                                    "type": "GlobalReference",
+                                    "local": false,
+                                    "value": "",
+                                    "index": 0,
+                                    "idType": "IRI"
+                                }
+                            ]
+                        },
+                        "constraints": [],
+                        "hasDataSpecification": [],
+                        "idShort": "Process_0",
+                        "modelType": {
+                            "name": "Property"
+                        },
+                        "valueType": "string",
+                        "kind": "Instance"
+                    }
+                ],
+                "kind": "Template"
+            }
+        ]
+    }
+]

@@ -461,6 +461,7 @@ class AAS_Collector:
             # i = i+ 1 
         with open(abs_file_path, "w") as outfile:   
             outfile.write(json_object)
+            print(f"Created {abs_file_path}")
             return 0
 
     def add_to_excel(self, dict_file, csv_file):

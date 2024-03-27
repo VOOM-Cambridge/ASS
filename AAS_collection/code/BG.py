@@ -15,9 +15,9 @@ from aas.adapter import aasx
 
 class BackgroundUpdater:
     def __init__(self, directory, direcAASX):
-        self.root = tk.Tk()
-        self.root.title("Submodel Importer")
-        self.root.geometry("300x100")
+        #self.root = tk.Tk()
+        #self.root.title("Submodel Importer")
+        #self.root.geometry("300x100")
         self.direcAASX = direcAASX
         self.directory = directory
 

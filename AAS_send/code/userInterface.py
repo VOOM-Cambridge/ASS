@@ -16,24 +16,30 @@ class App:
         AAS_direc = "AAS_data/order/"
         self.files_folder = os.path.join(main_direc, AAS_direc)
         print(self.files_folder)
+        self.findFiles()
+        self.text =""
 
 
+        
+        self.setup_routes()
+    def findFiles(self):
         files = os.listdir(self.files_folder)
         new_files =[]
         for file in files:
             new_files.append(file[:-5])
         self.newFiles = new_files
-        self.text =""
-        self.setup_routes()
+        
 
     def setup_routes(self):
         @self.app.route('/')
         def index():
+            self.findFiles()
             self.connect()
             return render_template('index.html', files=self.newFiles, text = self.text)
 
         @self.app.route('/', methods=['POST'])
         def submit():
+            self.findFiles()
             selected_file = request.form['file']
             self.send_file_mess(selected_file)
             self.text = "File sent: " + selected_file
