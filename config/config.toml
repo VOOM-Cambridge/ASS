@@ -1,7 +1,8 @@
 # config file for 3D printing lab
 [Factory]
-name = "3D Printing"
-sending_method = "Printing" # "Printing" or "MQTT" or "Store"
+name = "Design_Studio"
+sending_method = "Both"  # "Printing" or "MQTT" or "Store" or Both to show Both
+reciving_method = "Both" # the method used to recieve (same as above)
 # sending method = None means the AASX will be created
 file_directory_out = "AAS_data/order/"
 
@@ -11,12 +12,11 @@ file_directory_out = "AAS_data/order/"
 # Design Studio: 129.169.48.175
 
 [external_layer.mqtt]
-broker = "129.169.48.173"      #"mqtt.docker.local"
-broker_send = "129.169.48.173"
-
+# external reciving partner
+broker = "129.169.48.174" #"mqtt.docker.local"
 port = 1883
 base_topic_template = ""
-topic_send = "AAS/send/in/"
+topic = "AAS/send/in/"
 
 reconnect.initial = 5 # seconds
 reconnect.backoff = 2 # multiplier
@@ -27,11 +27,11 @@ serial = "0581_011c"
 connection_point = ["0", "1", "1.0"]
 
 [internal_layer.mqtt]
-broker = "129.169.48.173"  #"mqtt.docker.local"
+# internal sending to printer 
+broker = "129.169.48.175" #"mqtt.docker.local"
 port = 1883
 base_topic_template = ""
-topic = "AAS/send/in/#"
-topic_print = "AAS/print/"
+topic = "AAS/print/"
 
 reconnect.initial = 5 # seconds
 reconnect.backoff = 2 # multiplier

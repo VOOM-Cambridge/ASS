@@ -40,16 +40,20 @@ def create_building_blocks(config):
 
     mqtt_in = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4002", "bind": True} 
     save_in2 = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4002", "bind": False}
-    if config["Factory"]["sending_method"] == "Printing":
+    if config["Factory"]["reciving_method"] == "Printing":
         bbs["scan"] = BarcodeScanner(config, {'out': scan_in})
         bbs["pro"] = DataProcessing(config, {'in': webIn, 'out': webOut})
         bbs["save1"] = AAS_save(config, {'in':save_in1})
-    elif config["Factory"]["sending_method"] == "MQTT":
+    elif config["Factory"]["reciving_method"] == "MQTT":
         bbs["mqtt"] = MQTTServiceWrapper(config, {'out': mqtt_in})
         bbs["save2"] = AAS_save(config, {'in':save_in2})
-        
-    
-    
+    else:
+        scan_in = {"type": zmq.PUB, "address": "tcp://127.0.0.1:4005", "bind": True}
+        mqtt_in = {"type": zmq.PUB, "address": "tcp://127.0.0.1:4005", "bind": True} 
+        save_in2 = {"type": zmq.SUB, "address": "tcp://127.0.0.1:4005", "bind": False}
+        bbs["mqtt"] = MQTTServiceWrapper(config, {'out': mqtt_in})
+        bbs["scan"] = BarcodeScanner(config, {'out': scan_in})
+        bbs["save2"] = AAS_save(config, {'in1':save_in1})
 
     return bbs
 

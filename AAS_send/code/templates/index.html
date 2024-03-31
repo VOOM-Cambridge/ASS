@@ -8,6 +8,7 @@
       body {
         font-family: Arial, sans-serif;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
@@ -21,6 +22,7 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
         text-align: center;
+        margin-bottom: 20px; /* Add margin bottom to create space between the containers */
       }
 
       h1 {
@@ -53,9 +55,9 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="Printing">
       <h1>Select an Order to print</h1>
-      <form method="post" action="/">
+      <form method="post" action="/submit_printing">
         <select name="file">
           {% for file in files %}
           <option value="{{ file }}">{{ file }}</option>
@@ -63,9 +65,49 @@
         </select>
         <button type="submit">Print</button>
       </form>
-      <div class="container">
-        <p>{{text}}</p>
+      <div>
+        <h4>{{ textIn }}</p4>
       </div>
     </div>
+    <div class="container" id="mqtt">
+      <h1>Select an Order to send</h1>
+      <form method="post" action="/submit_mqtt">
+        <select name="file">
+          {% for file in files %}
+          <option value="{{ file }}">{{ file }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Print</button>
+      </form>
+      <div>
+        <h4>{{ textOut }}</h4>
+      </div>
+    </div>
+    <div class="container">
+      <button onClick="refreshPage()">Refresh</button>
+    </div>
+    <script>
+      // Get the input type passed by Flask (Assuming it's stored in a variable called inputType)
+      var inputType = "{{ typeIn }}";
+
+      // Check the input type and show/hide the specific div containers accordingly
+      // Hide all containers
+      document.querySelectorAll(".container").forEach(function (container) {
+        container.style.display = "none";
+      });
+
+      // Show the specific container based on the input type
+      if (inputType === "Printing") {
+        document.getElementById("Printing").style.display = "block";
+      } else if (inputType === "mqtt" || inputType === "MQTT") {
+        document.getElementById("mqtt").style.display = "block";
+      } else {
+        document.getElementById("mqtt").style.display = "block";
+        document.getElementById("Printing").style.display = "block";
+      }
+      function refreshPage() {
+        location.reload("");
+      }
+    </script>
   </body>
 </html>

@@ -34,6 +34,7 @@ class MQTT_forwarding_print(multiprocessing.Process):
         # declarations
         self.zmq_conf = zmq_conf
         self.zmq_in = None
+        
 
     def do_connect(self):
         self.zmq_in = context.socket(self.zmq_conf['in']['type'])
@@ -43,16 +44,16 @@ class MQTT_forwarding_print(multiprocessing.Process):
             self.zmq_in.connect(self.zmq_conf['in']["address"])
 
 
-    def mqtt_connect(self, client, first_time=False):
+    def mqtt_connect(self, first_time=False):
         timeout = self.initial
         exceptions = True
         while exceptions:
             try:
                 if first_time:
-                    client.connect(self.url, self.port, 60)
+                    self.client.connect(self.url, self.port, 60)
                 else:
                     logger.error("Attempting to reconnect...")
-                    client.reconnect()
+                    self.client.reconnect()
                 logger.info("Connected!")
                 time.sleep(self.initial)  # to give things time to settle
                 exceptions = False
@@ -67,19 +68,21 @@ class MQTT_forwarding_print(multiprocessing.Process):
     def on_disconnect(self, client, _userdata, rc):
         if rc != 0:
             logger.error(f"Unexpected MQTT disconnection (rc:{rc}), reconnecting...")
-            self.mqtt_connect(client)
+            self.mqtt_connect()
 
     def run(self):
         logger.info("Starting")
         self.do_connect()
-        client =mqtt.Client()
-        client.on_disconnect = self.on_disconnect
-        self.mqtt_connect(client, True)
+        self.client =mqtt.Client()
+        self.client.on_disconnect = self.on_disconnect
+        #client.on_publish = self.on_publish
+        self.mqtt_connect(True)
         logger.info("ZMQ Connected")
         run = True
         while run:
             while self.zmq_in.poll(500, zmq.POLLIN):
                 msg = self.zmq_in.recv()
+                logger.info("mess recived")
                 try: 
                     msg = msg.decode("utf-8")
                 except:
@@ -96,9 +99,12 @@ class MQTT_forwarding_print(multiprocessing.Process):
                 #data = [topic, msg_send]
                 logger.info("AAS sending with topic: " + topic)
                 out = json.dumps(msg_send)
-                client.publish(topic, out)
-                logger.info("Sent")
-    
+                self.client.publish(topic, out)
+                logger.info("Sent MQTT")
+
+    # def on_publish(client, userdata, mid):
+    #     print("Message published")
+
     def messeage_for_label(self, msg_in, config):
         #process the data for printer format
         payload = {}

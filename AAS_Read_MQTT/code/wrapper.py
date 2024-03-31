@@ -18,7 +18,7 @@ class MQTTServiceWrapper(multiprocessing.Process):
         self.url = mqtt_conf['broker']
         self.port = int(mqtt_conf['port'])
 
-        self.topic = mqtt_conf['topic']
+        self.topic = mqtt_conf['topic_in']
 
         self.initial = mqtt_conf['reconnect']['initial']
         self.backoff = mqtt_conf['reconnect']['backoff']

@@ -33,20 +33,23 @@ def create_building_blocks(config):
     bbs = {}
 
     interface = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4051", "bind": True}
-    print_pair = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
-    
-    check_Out = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
-    print_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
-    mqtt_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
+    # print_pair = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
+    # check_Out = {"type": zmq.PUSH, "address": "tcp://127.0.0.1:4000", "bind": True}
+    # print_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
+    # mqtt_in = {"type": zmq.PULL, "address": "tcp://127.0.0.1:4051", "bind": False}
     
     #bbs["check"] = Check_for_new(config, {"out":check_Out})
     
     if config["Factory"]["sending_method"] == "Printing":
-        bbs["out"] = MQTT_forwarding_print(config, {"in": print_in})
+        bbs["ui"] = App(config, {"out": interface}, "Printing")
     elif config["Factory"]["sending_method"] == "MQTT":
-        bbs["out"] = MQTT_forwarding(config, {"in": mqtt_in})
+        bbs["ui"] = App(config, {"out": interface}, "MQTT")
+    else: # both
+        bbs["ui"] = App(config, {"out": interface}, "Both")
+        print("both")
+        #bbs["out"] = MQTT_forwarding(config, {"in": mqtt_in})
 
-    bbs["ui"] = App(config, {"out": interface})
+    
     return bbs
 
 
