@@ -50,6 +50,9 @@ class App:
         self.backoff = self.config_mqtt_out['reconnect']['backoff']
         self.limit = self.config_mqtt_out['reconnect']['limit']
         self.client_Ex.on_disconnect = self.on_disconnectIn
+        self.client_Ex.on_publish = self.on_publish
+        #self.client_Ex.on_connect = self.onConnectEx
+        self.connected_flag_Ex= False
         self.mqtt_connectOut( True)
         #self.client_ex.connect(self.url, self.port)
         self.config_mqtt_int = config['internal_layer']['mqtt']
@@ -58,6 +61,9 @@ class App:
         self.topic_Int = self.config_mqtt_int["topic"]
         self.client_Int = mqtt.Client()
         self.client_Int.on_disconnect = self.on_disconnectOut
+        self.client_Int.on_publish = self.on_publish
+        #self.client_Int.on_connect = self.onConnectInt
+        self.connected_flag_Int = False
         self.mqtt_connectIn(True)
         #self.client_ex.connect(self.url, self.port)
 
@@ -95,26 +101,27 @@ class App:
             return redirect(url_for('index'))
             #return render_template('index.html', files=self.newFiles, textOut = self.textOut, textIn = self.textIn, typeIn= self.typeIn)
 
-        @self.app.route('/start', methods=['GET'])
-        def start():
-            self.zmq_out.send(b'start')
-            return jsonify({'message': 'Start command sent'})
+        @self.app.route('/check_connection_ex', methods=['GET'])
+        def check_connection_EX():
+            connected = self.connected_flag_Ex
+            print(connected)
+            if not connected:
+                self.mqtt_connectOut()
+            return jsonify({'connected': connected})
+        
+        @self.app.route('/check_connection_int', methods=['GET'])
+        def check_connection_Int():
+            connected = self.connected_flag_Int
+            print(connected)
+            if not connected:
+                self.mqtt_connectIn()
+            return jsonify({'connected': connected})
 
-        @self.app.route('/stop', methods=['GET'])
-        def stop():
-            self.zmq_out.send(b'stop')
-            return jsonify({'message': 'Stop command sent'})
 
     def start(self):
         logger.info("Starting")
         self.app.run(debug=True,host="0.0.0.0",port=6050)
     
-    def connect(self):
-        self.zmq_out = context.socket(self.zmq_conf['out']['type'])
-        if self.zmq_conf["out"]["bind"]:
-            self.zmq_out.bind(self.zmq_conf["out"]["address"])
-        else:
-            self.zmq_out.connect(self.zmq_conf["out"]["address"])
 
     def findCurrentStore(self):
         path = os.getcwd()
@@ -137,6 +144,9 @@ class App:
             return True
         else:
             return False
+        
+    def on_publish(self, client,userdata,result): 
+        logger.info("Published")
         
     def file_exists(self, directory, filename):
         filepath = os.path.join(directory, filename)
@@ -161,20 +171,20 @@ class App:
             self.send_mqtt_print(json_data)
         logging.info("sent")
 
-    def mqtt_connectOut(self,first_time=False):
+    def mqtt_connectOut(self, first_time=False):
         timeout = self.initial
-        exceptions = True
         name = "External"
-        while exceptions:
+        while not self.connected_flag_Ex:
             try:
                 if first_time:
                     self.client_Ex.connect(self.url_Ex, self.port_Ex, 60)
+                    self.connected_flag_Ex = True
                 else:
-                    logger.error("Attempting to reconnect to" + name)
+                    logger.error("Attempting to reconnect to " + name)
                     self.client_Ex.reconnect()
+                    self.connected_flag_Ex = True  # Set flag if reconnection succeeds
                 logger.info("Connected to " + name + "!")
                 time.sleep(self.initial)  # to give things time to settle
-                exceptions = False
             except Exception:
                 logger.error(f"Unable to connect to {name}, retrying in {timeout} seconds")
                 time.sleep(timeout)
@@ -183,20 +193,20 @@ class App:
                 else:
                     timeout = self.limit
 
-    def mqtt_connectIn(self,first_time=False):
+    def mqtt_connectIn(self, first_time=False):
         timeout = self.initial
-        exceptions = True
         name = "Internal"
-        while exceptions:
+        while not self.connected_flag_Int:
             try:
                 if first_time:
                     self.client_Int.connect(self.url_Int, self.port_Int, 60)
+                    self.connected_flag_Int = True
                 else:
-                    logger.error("Attempting to reconnect to" + name)
+                    logger.error("Attempting to reconnect to " + name)
                     self.client_Int.reconnect()
+                    self.connected_flag_Int = True  # Set flag if reconnection succeeds
                 logger.info("Connected to " + name + "!")
                 time.sleep(self.initial)  # to give things time to settle
-                exceptions = False
             except Exception:
                 logger.error(f"Unable to connect to {name}, retrying in {timeout} seconds")
                 time.sleep(timeout)
@@ -206,40 +216,40 @@ class App:
                     timeout = self.limit
 
     def on_disconnectIn(self, client, _userdata, rc):
+        self.connected_flag_Int=False
         if rc != 0:
             logger.error(f"Unexpected MQTT disconnection (rc:{rc}), reconnecting...")
             self.mqtt_connectIn()
 
     def on_disconnectOut(self, client, _userdata, rc):
+        self.connected_flag_Ex=False
         if rc != 0:
             logger.error(f"Unexpected MQTT disconnection (rc:{rc}), reconnecting...")
             self.mqtt_connectOut()
 
     def send_mqtt_print(self, msg_json):
-        try:
-            print("MQTT_processing: mess recieved to process")
-            msg_send = self.messeage_for_label(msg_json, self.config_lab)
-            topic = self.topic_Int + self.name + "/"
-            #data = [topic, msg_send]
-            logger.info("AAS sending with topic: " + topic)
-            out = json.dumps(msg_send)
-            self.client_Int.publish(topic, out)
-            logger.info("Sent to printer")
-        except: 
-            print("Error sending to printer")
-        
+        logger.info("MQTT_processing: mess recieved to process")
+        msg_send = self.messeage_for_label(msg_json, self.config_lab)
+        topic = self.topic_Int + self.name + "/"
+        #data = [topic, msg_send]
+        logger.info("AAS sending with topic: " + topic)
+        out = json.dumps(msg_send)
+        if not self.connected_flag_Int:
+            self.mqtt_connectIn
+        self.client_Int.publish(topic, out, 1)
+        logger.info("Sent to printer")
     
     def send_mqtt(self, msg_json):
-        try:
-            print("MQTT_processing: mess recieved to process")
-            topic = self.topic_Ex + self.name + "/"
-            #data = [topic, msg_send]
-            logger.info("AAS sending with topic: " + topic)
-            out = json.dumps(msg_json)
-            self.client_Ex.publish(topic, out)
-            logger.info("Sent MQTT")
-        except: 
-            print("Error sending to printer")
+        logger.info("MQTT_processing: mess recieved to process")
+        topic = self.topic_Ex + self.name + "/"
+        #data = [topic, msg_send]
+        logger.info("AAS sending with topic: " + topic)
+        out = json.dumps(msg_json)
+        if not self.connected_flag_Ex:
+            self.mqtt_connectOut
+        self.client_Ex.publish(topic, out, 1)
+        logger.info("Sent MQTT")
+
     
     def messeage_for_label(self, msg_in, config):
         #process the data for printer format

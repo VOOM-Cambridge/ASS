@@ -6,10 +6,18 @@ reciving_method = "Both" # the method used to recieve (same as above)
 # sending method = None means the AASX will be created
 file_directory_out = "AAS_data/order/"
 
-# 3D Printing: 129.169.48.173
-# Robot Lab: 129.169.48.176
-# Manual Assembly: 129.169.48.174
-# Design Studio: 129.169.48.175
+[[reciever]]
+name = "Manual Assembly"
+ip = "129.169.48.174"
+[[reciever]]
+name = "3D Printing"
+ip = "129.169.48.173"
+[[reciever]]
+name = "Robot Lab"
+ip = "129.169.48.176"
+[[reciever]]
+name = "Design Studio"
+ip = "129.169.48.175"
 
 [external_layer.mqtt]
 # external reciving partner
@@ -17,6 +25,7 @@ broker = "129.169.48.174" #"mqtt.docker.local"
 port = 1883
 base_topic_template = ""
 topic = "AAS/send/in/"
+portIn = 6060
 
 reconnect.initial = 5 # seconds
 reconnect.backoff = 2 # multiplier
@@ -32,6 +41,7 @@ broker = "129.169.48.175" #"mqtt.docker.local"
 port = 1883
 base_topic_template = ""
 topic = "AAS/print/"
+portIn = 6050
 
 reconnect.initial = 5 # seconds
 reconnect.backoff = 2 # multiplier

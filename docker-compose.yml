@@ -24,9 +24,9 @@ services:
     #             aliases:
     #                 - mqttread.docker.local
     #     restart: unless-stopped
-    send_aas:
+    send_aas_mqtt:
         extends:
-            file: AAS_send/app.yml
+            file: AAS_send_mqtt/app.yml
             service: app
         volumes:
             - ./AAS_data:/app/AAS_data
@@ -35,6 +35,18 @@ services:
             internal:
                 aliases:
                     - mqttsend.docker.local
+        restart: unless-stopped
+    send_aas_print:
+        extends:
+            file: AAS_send_print/app.yml
+            service: app
+        volumes:
+            - ./AAS_data:/app/AAS_data
+            - ./config:/app/config
+        networks:
+            internal:
+                aliases:
+                    - printsend.docker.local
         restart: unless-stopped
 networks:
     internal:

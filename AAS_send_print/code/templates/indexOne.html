@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Selector</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+      .container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px; /* Add margin bottom to create space between the containers */
+      }
+      .containerNew {
+        background-color: #57c96a;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px; /* Add margin bottom to create space between the containers */
+      }
+      h1 {
+        font-size: 30px;
+        margin-bottom: 20px;
+        color: black;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      select,
+      button[type="submit"] {
+        margin-top: 10px;
+        padding: 8px 12px;
+        font-size: 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+      select {
+        background-color: #fff;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Select an order to print</h1>
+      <form method="post" action="/submit">
+        <select name="file">
+          {% for file in files %}
+          <option value="{{ file }}">{{ file }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Print</button>
+      </form>
+      <h4>File sent: {{ text }}</h4>
+      <div id="color_block" class="containerNew">Connection Status</div>
+    </div>
+
+    <script>
+      function updateColorBlock() {
+        fetch("/check_connection")
+          .then((response) => response.json())
+          .then((data) => {
+            const colorBlock = document.getElementById("color_block");
+            if (data.connected) {
+              colorBlock.style.backgroundColor = "#57c96a";
+            } else {
+              colorBlock.style.backgroundColor = "#c94b4d";
+            }
+          });
+      }
+
+      setInterval(updateColorBlock, 5000);
+    </script>
+  </body>
+</html>

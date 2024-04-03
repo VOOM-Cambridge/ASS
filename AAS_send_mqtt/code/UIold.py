@@ -18,6 +18,7 @@ class App:
         print(self.files_folder)
         self.findFiles()
         self.text =""
+        self.port_show = 6050
         self.setup_routes()
 
     def findFiles(self):
@@ -40,8 +41,9 @@ class App:
         def submit():
             self.findFiles()
             selected_file = request.form['file']
-            self.send_file_mess(selected_file)
             self.text = "File sent: " + selected_file
+            self.send_file_mess(selected_file)
+            
             return render_template('index.html', files=self.newFiles, text = self.text)
 
         @self.app.route('/start', methods=['GET'])
@@ -55,7 +57,7 @@ class App:
             return jsonify({'message': 'Stop command sent'})
 
     def start(self):
-        self.app.run(host="0.0.0.0",port=6050)
+        self.app.run(host="0.0.0.0",port=self.port_show)
     
     def connect(self):
         self.zmq_out = context.socket(self.zmq_conf['out']['type'])

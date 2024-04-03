@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Selector</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+      }
+
+      .container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px; /* Add margin bottom to create space between the containers */
+      }
+
+      h1 {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      select,
+      button[type="submit"] {
+        margin-top: 10px;
+        padding: 8px 12px;
+        font-size: 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      select {
+        background-color: #fff;
+        color: black;
+      }
+      mqtt{
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        backgroundColor = 'green';
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="Printing">
+      <h1>Select an Order to print</h1>
+      <form method="post" action="/submit_printing">
+        <select name="file">
+          {% for file in files %}
+          <option value="{{ file }}">{{ file }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Print</button>
+      </form>
+      
+      <div>
+        <h4>{{ textIn }}</p4>
+      </div>
+      <div id="color_block_ex" class = "mqtt">Connected?</div>
+    </div>
+    <div class="container" id="mqtt">
+      <h1>Select an Order to send</h1>
+      <form method="post" action="/submit_mqtt">
+        <select name="file">
+          {% for file in files %}
+          <option value="{{ file }}">{{ file }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Print</button>
+      </form>
+      
+      <div>
+        <h4>{{ textOut }}</h4>
+      </div>
+      <div id="color_block_int" class = "mqtt">Connected?</div>
+    </div>
+    <div class="container">
+      <button onClick="refreshPage()">Refresh</button>
+    </div>
+    <script>
+      // Get the input type passed by Flask (Assuming it's stored in a variable called inputType)
+      var inputType = "{{ typeIn }}";
+
+      // Check the input type and show/hide the specific div containers accordingly
+      // Hide all containers
+      document.querySelectorAll(".container").forEach(function (container) {
+        container.style.display = "none";
+      });
+
+      // Show the specific container based on the input type
+      if (inputType === "Printing") {
+        document.getElementById("Printing").style.display = "block";
+      } else if (inputType === "mqtt" || inputType === "MQTT") {
+        document.getElementById("mqtt").style.display = "block";
+      } else {
+        document.getElementById("mqtt").style.display = "block";
+        document.getElementById("Printing").style.display = "block";
+      }
+      function refreshPage() {
+        location.reload("");
+      }
+
+      function updateColorBlock() {
+          fetch('/check_connection_int')
+              .then(response => response.json())
+              .then(data => {
+                  const colorBlock = document.getElementById('color_block_int');
+                  if (data.connected) {
+                      colorBlock.style.backgroundColor = 'green';
+                  } else {
+                      colorBlock.style.backgroundColor = 'red';
+                  }
+              });
+          
+          fetch('/check_connection_ex')
+              .then(response => response.json())
+              .then(data => {
+                  const colorBlock = document.getElementById('color_block_ex');
+                  if (data.connected) {
+                      colorBlock.style.backgroundColor = 'green';
+                  } else {
+                      colorBlock.style.backgroundColor = 'red';
+                  }
+              });
+          }
+          
+      setInterval(updateColorBlock, 5000); 
+    </script>
+  </body>
+</html>

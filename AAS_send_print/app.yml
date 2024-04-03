@@ -9,5 +9,3 @@ services:
       - ./data:/app/data
     ports:
       - "6050:6050"
-    # devices:
-    #   - /dev/input:/dev/input:ro

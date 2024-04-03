@@ -11,10 +11,8 @@ import logging
 import zmq
 # local
 
-from mqqt_send import MQTT_forwarding
-from mqqt_send_print import MQTT_forwarding_print
-from check_new import Check_for_new
-from userInterface import App
+#from userInterface import App
+from UI_one import App
 logger = logging.getLogger("main")
 logging.basicConfig(level=logging.DEBUG)  # move to log config file using python functionality
 
@@ -40,15 +38,7 @@ def create_building_blocks(config):
     
     #bbs["check"] = Check_for_new(config, {"out":check_Out})
     
-    if config["Factory"]["sending_method"] == "Printing":
-        bbs["ui"] = App(config, {"out": interface}, "Printing")
-    elif config["Factory"]["sending_method"] == "MQTT":
-        bbs["ui"] = App(config, {"out": interface}, "MQTT")
-    else: # both
-        bbs["ui"] = App(config, {"out": interface}, "Both")
-        print("both")
-        #bbs["out"] = MQTT_forwarding(config, {"in": mqtt_in})
-
+    bbs["ui"] = App(config, {"out": interface}, "Printing")
     
     return bbs
 

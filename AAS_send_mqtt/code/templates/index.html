@@ -52,6 +52,15 @@
         background-color: #fff;
         color: black;
       }
+      mqtt{
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        backgroundColor = 'green';
+      }
     </style>
   </head>
   <body>
@@ -65,9 +74,11 @@
         </select>
         <button type="submit">Print</button>
       </form>
+      
       <div>
         <h4>{{ textIn }}</p4>
       </div>
+      <div id="color_block_ex" class = "mqtt">Connected?</div>
     </div>
     <div class="container" id="mqtt">
       <h1>Select an Order to send</h1>
@@ -79,9 +90,11 @@
         </select>
         <button type="submit">Print</button>
       </form>
+      
       <div>
         <h4>{{ textOut }}</h4>
       </div>
+      <div id="color_block_int" class = "mqtt">Connected?</div>
     </div>
     <div class="container">
       <button onClick="refreshPage()">Refresh</button>
@@ -108,6 +121,32 @@
       function refreshPage() {
         location.reload("");
       }
+
+      function updateColorBlock() {
+          fetch('/check_connection_int')
+              .then(response => response.json())
+              .then(data => {
+                  const colorBlock = document.getElementById('color_block_int');
+                  if (data.connected) {
+                      colorBlock.style.backgroundColor = 'green';
+                  } else {
+                      colorBlock.style.backgroundColor = 'red';
+                  }
+              });
+          
+          fetch('/check_connection_ex')
+              .then(response => response.json())
+              .then(data => {
+                  const colorBlock = document.getElementById('color_block_ex');
+                  if (data.connected) {
+                      colorBlock.style.backgroundColor = 'green';
+                  } else {
+                      colorBlock.style.backgroundColor = 'red';
+                  }
+              });
+          }
+          
+      setInterval(updateColorBlock, 5000); 
     </script>
   </body>
 </html>

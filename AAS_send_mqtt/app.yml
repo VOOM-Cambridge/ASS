@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  app:
+    build: .
+    privileged: true
+    volumes:
+      #- /etc/localtime:/etc/localtime:ro
+      - ./data:/app/data
+    ports:
+      - "6060:6060"
